@@ -75,3 +75,20 @@ layer.selectByExpression(expression)
 ```
 
 Using these methods, you can construct clear and functional expressions for data selection in QGIS, enhancing both the readability and maintainability of your code.
+
+## Problem Solving Expression Errors
+
+If you encounter errors while constructing expressions, check for typos, missing quotes, and proper field names. The QGIS expression builder can be a helpful tool to test and validate your expressions before using them in Python scripts.
+
+Examples of errors:
+> Correct
+`rice_layer.selectByExpression(r"\"primary_crop\" = 'maize'")`
+
+> Error: Field name should not have spaces between the quotes.
+`rice_layer.selectByExpression(r" \"primary_crop\" = 'maize' ")`
+
+> Error: Missing quotes around the field name.
+`rice_layer.selectByExpression(r"primary_crop = 'maize'")`
+
+> Error: Capitalization errors
+`rice_layer.selectByExpression(r"\"Primary_Crop\" = 'maize'")`

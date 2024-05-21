@@ -27,10 +27,9 @@
 <h1 id="creating-expressions-for-selectbyexpression-in-qgis">Creating Expressions for <code>selectByExpression</code> in QGIS </h1>
 <p>The <code>selectByExpression</code> method in QGIS is a powerful way to select features within a layer based on specific criteria defined by an expression. These expressions are similar to SQL WHERE clauses and can be used to filter data based on attributes, geometry properties, and even complex logical conditions.</p>
 <h2 id="understanding-the-syntax">Understanding the Syntax </h2>
-<p>v<br>
-Expressions in QGIS are written as strings, which can include field names, operators, values, and functions. To create these expressions in Python, it's essential to handle string formatting correctly, especially when incorporating variables or constructing complex queries.</p>
+<p>Expressions in QGIS are written as strings, which can include field names, operators, values, and functions. To create these expressions in Python, it's essential to handle string formatting correctly, especially when incorporating variables or constructing complex queries.</p>
 <h2 id="basic-syntax">Basic Syntax </h2>
-<p>A basic expression might look like vthis:</p>
+<p>A basic expression might look like this:</p>
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code>expression <span class="token operator">=</span> <span class="token string">"\"fieldname\" = 'value'"</span>
 </code></pre><p>In this example:</p>
 <ul>
@@ -66,6 +65,25 @@ status_value <span class="token operator">=</span> <span class="token string">"m
 expression <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"\"</span><span class="token interpolation"><span class="token punctuation">{</span>field_name<span class="token punctuation">}</span></span><span class="token string">\" &gt; </span><span class="token interpolation"><span class="token punctuation">{</span>value<span class="token punctuation">}</span></span><span class="token string"> AND \"</span><span class="token interpolation"><span class="token punctuation">{</span>status_field<span class="token punctuation">}</span></span><span class="token string">\" = '</span><span class="token interpolation"><span class="token punctuation">{</span>status_value<span class="token punctuation">}</span></span><span class="token string">'"</span></span>
 layer<span class="token punctuation">.</span>selectByExpression<span class="token punctuation">(</span>expression<span class="token punctuation">)</span>
 </code></pre><p>Using these methods, you can construct clear and functional expressions for data selection in QGIS, enhancing both the readability and maintainability of your code.</p>
+<h2 id="problem-solving-expression-errors">Problem Solving Expression Errors </h2>
+<p>If you encounter errors while constructing expressions, check for typos, missing quotes, and proper field names. The QGIS expression builder can be a helpful tool to test and validate your expressions before using them in Python scripts.</p>
+<p>Examples of errors:</p>
+<blockquote>
+<p>Correct<br>
+<code>rice_layer.selectByExpression(r"\"primary_crop\" = 'maize'")</code></p>
+</blockquote>
+<blockquote>
+<p>Error: Field name should not have spaces between the quotes.<br>
+<code>rice_layer.selectByExpression(r" \"primary_crop\" = 'maize' ")</code></p>
+</blockquote>
+<blockquote>
+<p>Error: Missing quotes around the field name.<br>
+<code>rice_layer.selectByExpression(r"primary_crop = 'maize'")</code></p>
+</blockquote>
+<blockquote>
+<p>Error: Capitalization errors<br>
+<code>rice_layer.selectByExpression(r"\"Primary_Crop\" = 'maize'")</code></p>
+</blockquote>
 
       </div>
       

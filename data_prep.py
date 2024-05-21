@@ -64,4 +64,37 @@ for image in images:
                     os.path.basename(image).replace(".TIF", ".tif"),
                 )
             )
+# %% clean field names of tz data
+import geopandas as gpd
+
+points = gpd.read_file(
+    r"/mnt/bigdrive/Dropbox/Presentations/YouthMappers_Thailand_2024/Tanzania/tz_labels.geojson"
+)
+points.columns
+# %%
+points = points[
+    [
+        "Picture_of",
+        "primar",
+        "Secondary_",
+        "Field_size",
+        "geometry",
+    ]
+]
+points.rename(
+    {
+        "Picture_of": "pic_url",
+        "primar": "primary_crop",
+        "Secondary_": "secondary_crop",
+        "Field_size": "field_size",
+    },
+    axis=1,
+    inplace=True,
+)
+points
+# %%
+points.to_file(
+    r"/mnt/bigdrive/Dropbox/Presentations/YouthMappers_Thailand_2024/Tanzania/tz_labels.geojson",
+    driver="GeoJSON",
+)
 # %%

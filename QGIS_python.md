@@ -78,6 +78,8 @@ result = math.sqrt(25)  # Computes the square root of 25
 print(result)
 ```
 
+Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
+
 ### Using Python with QGIS
 
 QGIS extends Python’s capabilities by providing a specialized module called `qgis`. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.
@@ -121,6 +123,8 @@ You should now see `Rice Crops` in your QGIS Layers Panel. This layer contains t
 
 ![Crop ](images/rice_crops.png)
 
+From this point on we will be refering this layer by the name `rice_layer` in our code.
+
 <br>
 
 >  *Where do I find the path to my file?*  
@@ -132,15 +136,19 @@ In order to load a file into python you will need to find the 'path' to the `tz_
 *Make sure your path doesn't include ``'file://'`` at the beginning.*
 
 
-### Step 2: Subsetting the Data for Rice Crops
+### Step 2: Subsetting the Data for Maize Crops
 
 Next, we'll filter out the rice crops from our dataset. We'll assume that the crop types are stored in a field named `crop_type`.
 
 ```python
 # Select features where the crop type is 'Rice'
-rice_layer.selectByExpression(r" \"primar\" = 'rice' ")
+rice_layer.selectByExpression("\"primary_crop\" = 'maize'")
+# Print the number of selected rows
+print(f"Number of selected rows: {rice_layer.selectedFeatureCount()}")
 ```
-> For more on how to create expressions in Qgis see [Select Expressions](
+
+> **Note:**
+For more on how to create expressions in Qgis see [Select Expressions](https://mmann1123.github.io/YM_Conference_Thailand/select_expressions.html)
 
 ### Step 3: Writing the Subset to a New GeoJSON File
 
@@ -156,8 +164,10 @@ if error[0] == QgsVectorFileWriter.NoError:
     print("Success: GeoJSON file has been created.")
 else:
     print("Error: Failed to write GeoJSON.")
-
 ```
+
+Your `output_path` should be a new file in the same directory as the original file. You can now load this new file into QGIS to see the subset of rice crops.
+
 
 ### Variant: Writing to a Shapefile
 
