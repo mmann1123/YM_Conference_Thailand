@@ -460,3 +460,7 @@ This tutorial provides you with a basic understanding of how to work with polygo
 ## Challenge Question Answers <a name="answers"></a>
 
 > The answers to the challenge questions can be found in the [Challenge Solutions](https://mmann1123.github.io/YM_Conference_Thailand/challenge_solutions.html) page.
+
+---
+
+> The basics of python tutorial can be found [here](https://mmann1123.github.io/YM_Conference_Thailand/python_basics.html)
