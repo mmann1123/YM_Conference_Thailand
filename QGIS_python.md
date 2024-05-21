@@ -511,11 +511,12 @@ for feature in sa_labels_layer.getFeatures():
     crop_type = feature['crop_name']  # Adjust the field name if different
     area_sqm = feature.geometry().area()  # Area in the CRS's units (e.g., square meters)
 
-    
     # Convert the area to acres
-    
-    # Update the area_by_crop dictionary for the crop type
+    # your code
 
+    # Update the area_by_crop dictionary for the crop type
+    # your code
+    
 # Print the total area for each crop type
 for crop, area in area_by_crop.items():
     print(f"{crop}: {area:.2f} acres")

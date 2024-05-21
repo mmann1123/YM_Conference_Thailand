@@ -401,11 +401,12 @@ area_by_crop <span class="token operator">=</span> <span class="token punctuatio
     crop_type <span class="token operator">=</span> feature<span class="token punctuation">[</span><span class="token string">'crop_name'</span><span class="token punctuation">]</span>  <span class="token comment"># Adjust the field name if different</span>
     area_sqm <span class="token operator">=</span> feature<span class="token punctuation">.</span>geometry<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>area<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Area in the CRS's units (e.g., square meters)</span>
 
-    
     <span class="token comment"># Convert the area to acres</span>
-    
-    <span class="token comment"># Update the area_by_crop dictionary for the crop type</span>
+    <span class="token comment"># your code</span>
 
+    <span class="token comment"># Update the area_by_crop dictionary for the crop type</span>
+    <span class="token comment"># your code</span>
+    
 <span class="token comment"># Print the total area for each crop type</span>
 <span class="token keyword keyword-for">for</span> crop<span class="token punctuation">,</span> area <span class="token keyword keyword-in">in</span> area_by_crop<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>crop<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>area<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> acres"</span></span><span class="token punctuation">)</span>
