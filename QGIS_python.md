@@ -100,7 +100,7 @@ With these imports, you’re now ready to use the QGIS Python API to enhance you
 
 ---
 
-## Tutorial: Working with Crop Types in QGIS Python
+## Tutorial 1: Working with Crop Types in QGIS Python
 
 In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.
 
@@ -260,8 +260,137 @@ else:
 
 ```
 
-### Recap 
+### Conclusion 
 
 In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, subset the data for rice crops, and write the results to a new file. We also explored how to write the output to a Shapefile by consulting the QGIS API documentation.
 
 ---
+---
+
+## Tutorial 2: Counting Observations by Crop Type in QGIS
+
+In this tutorial, we will learn how to load a vector layer into QGIS, access its attribute data, and perform a basic analysis by counting the number of observations for each crop type using the `primary_crop` field from the `tz_labels.geojson` dataset.
+
+### Step 1: Load the Vector Layer
+
+First, let’s load the `tz_labels.geojson` into QGIS. Open the Python console in QGIS and use the following command to add the layer:
+
+```python
+# Load the tz_labels.geojson file
+layer_path = "/path/to/tz_labels.geojson"  # Update this path to your file's location
+tz_labels_layer = iface.addVectorLayer(layer_path, "TZ Labels", "ogr")
+if not tz_labels_layer:
+    print("Failed to load the layer.")
+else:
+    print("Layer loaded successfully.")
+```
+
+### Using Dictionaries to Count Items in Python
+
+In Python, a dictionary is a collection of key-value pairs where each key is unique. This structure is ideal for counting occurrences of items because you can use the item as the key and its count as the value.
+
+#### Basic Example of Counting with Dictionaries
+
+Let’s look at a simple example using a list of fruits to illustrate how we can use a dictionary to count occurrences.
+
+1) *List of Fruits*: We start with a list of fruits where some fruits may appear multiple times.
+
+```python
+# List of fruits
+fruits = ['apple', 'banana', 'orange', 'apple', 'orange', 'banana', 'orange']
+```
+2) *Initialize the Dictionary*: We start with an empty dictionary `fruit_counts` where each fruit name will be a key, and the count of that fruit will be the corresponding value.
+
+``` python 
+# Initialize a dictionary to hold the count of each fruit
+fruit_counts = {}
+```
+
+3) *Iterate Through the List*: We loop through each element in the `fruits` list.
+4) *Update the Dictionary*: As we move through the elements of `fruits` list, we update the `fruit_counts` dictionary:
+   - If the fruit is already a key in the dictionary (`if fruit in fruit_counts`), we increase its count by 1.
+   - If the fruit is not yet a new `fruit` key in the dictionary, we add it and set its count to 1.
+
+``` python
+# Iterate over the list of fruits
+for fruit in fruits:
+    if fruit in fruit_counts:
+        fruit_counts[fruit] += 1  # Increment the count if the fruit is already in the dictionary
+    else:
+        fruit_counts[fruit] = 1  # Set the count to 1 if the fruit is not in the dictionary yet
+```
+5) *Print the Results*: After the loop, we print each fruit and its count. The `items()` method returns a list of tuple pairs (key, value) from the dictionary.
+
+``` python
+# Print the counts for each fruit
+for fruit, count in fruit_counts.items():
+    print(f"{fruit}: {count}")
+```
+
+**Output**:
+The following is the output of the code snippet above:
+
+```python
+apple: 2
+banana: 2
+orange: 3
+```
+ 
+### Step 2: Applying This to QGIS Data
+
+We can apply the same technique to count crop types from a feature layer in QGIS. Here’s how it connects to our GIS data example:
+
+```python
+# Suppose we have a layer loaded as tz_labels_layer and it contains a field 'primary_crop'
+
+# Initialize a dictionary to hold the count of each crop type
+crop_counts = {}
+
+# Access the features (rows) in the layer
+for feature in tz_labels_layer.getFeatures():
+    # Get the value of the 'primary_crop' field
+    crop_type = feature['primary_crop']
+    
+    # Use the dictionary counting method
+    if crop_type in crop_counts:
+        crop_counts[crop_type] += 1
+    else:
+        crop_counts[crop_type] = 1
+
+# Print the counts for each crop type
+for crop, count in crop_counts.items():
+    print(f"{crop}: {count}")
+```
+Your output should be as follows:
+
+``` bash
+maize: 403
+rice: 280
+soybeans: 10
+sunflower: 278
+peanuts: 13
+fallow_barren: 1
+cassava: 76
+sorghum: 131
+okra: 2
+millet: 139
+no: 5
+cotton: 50
+don_t_know: 2
+large_building: 1
+forest_shrubland: 2
+could be maize.: 1
+water_body: 1
+water: 5
+```
+
+This method efficiently tracks the number of occurrences of each crop type, providing a quick summary of the data in your GIS layer. By leveraging Python dictionaries, you can easily extend this approach to count various attributes across different datasets in QGIS.
+
+---
+#### Challenge C: Count observations by field size
+
+Our `tz_labels.geojson` dataset contains a field named `field_size` that represents the size of each field. Try adapting the code to count the number of observations for each field size category.
+
+### Conclusion
+
+This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided `tz_labels.geojson`. This process can be adapted to other datasets and attributes for various analytical needs.

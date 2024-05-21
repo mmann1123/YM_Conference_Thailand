@@ -26,8 +26,7 @@
       
 <h1 id="introduction-to-python-in-qgis">Introduction to Python in QGIS </h1>
 <p>Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-source geographic information system (GIS) that supports various GIS operations and spatial data management. One of the fantastic features of QGIS is its built-in Python console, which allows you to enhance your GIS projects with programming.</p>
-<p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user<br>
-interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
+<p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
 <h2 id="accessing-the-python-console-in-qgis">Accessing the Python Console in QGIS </h2>
 <p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
 <ol>
@@ -98,7 +97,7 @@ interact with its objects (layers, features, or interface). QGIS also has a Pyth
 <span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
 </code></pre><p>With these imports, you’re now ready to use the QGIS Python API to enhance your GIS projects with automated scripts and customized functionality!</p>
 <hr>
-<h2 id="tutorial-working-with-crop-types-in-qgis-python">Tutorial: Working with Crop Types in QGIS Python </h2>
+<h2 id="tutorial-1-working-with-crop-types-in-qgis-python">Tutorial 1: Working with Crop Types in QGIS Python </h2>
 <p>In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.</p>
 <h3 id="step-1-reading-the-geojson-file">Step 1: Reading the GeoJSON File </h3>
 <p>First, we need to load our GeoJSON file into QGIS. We'll use the <code>iface</code> object, which is a part of the QGIS Python API that represents the main interface of QGIS.</p>
@@ -157,6 +156,45 @@ error <span class="token operator">=</span> QgsVectorFileWriter<span class="toke
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Error: Failed to write GeoJSON."</span><span class="token punctuation">)</span>
 </code></pre><p>Your <code>output_path</code> should be a new file in the same directory as the original file. You can now load this new file into QGIS to see the subset of rice crops.</p>
 <hr>
+<h4 id="full-script">Full Script </h4>
+<p>The following is the full script that you can run in the QGIS Python console to read a GeoJSON file, subset the data for rice crops, and write the results to a new file.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-from">from</span> qgis<span class="token punctuation">.</span>core <span class="token keyword keyword-import">import</span> <span class="token operator">*</span>
+<span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
+
+<span class="token comment"># Path to the GeoJSON file</span>
+file_path <span class="token operator">=</span> <span class="token string">'path_to_your_file/tz_labels.geojson'</span>
+
+<span class="token comment"># Load the layer in</span>
+rice_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>file_path<span class="token punctuation">,</span>   <span class="token comment"># path to the file</span>
+                                 baseName<span class="token operator">=</span> <span class="token string">"Rice Crops"</span><span class="token punctuation">,</span>  <span class="token comment"># name of the layer in QGIS</span>
+                                 providerKey<span class="token operator">=</span><span class="token string">"ogr"</span><span class="token punctuation">)</span> <span class="token comment"># how to read it</span>
+<span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> rice_layer<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer failed to load!"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer loaded successfully!"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Select features where the crop type is 'Rice'</span>
+rice_layer<span class="token punctuation">.</span>selectByExpression<span class="token punctuation">(</span><span class="token string">"\"primary_crop\" = 'maize'"</span><span class="token punctuation">)</span>
+<span class="token comment"># Print the number of selected rows</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Number of selected rows: </span><span class="token interpolation"><span class="token punctuation">{</span>rice_layer<span class="token punctuation">.</span>selectedFeatureCount<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Define the output file path</span>
+output_path <span class="token operator">=</span> <span class="token string">'path_to_output/rice_subset.geojson'</span>
+
+<span class="token comment"># Write the selected features to a new GeoJSON</span>
+error <span class="token operator">=</span> QgsVectorFileWriter<span class="token punctuation">.</span>writeAsVectorFormat<span class="token punctuation">(</span>layer <span class="token operator">=</span> rice_layer<span class="token punctuation">,</span> 
+                    fileName <span class="token operator">=</span> output_path<span class="token punctuation">,</span> <span class="token comment"># path and name of the output file</span>
+                    fileEncoding <span class="token operator">=</span> <span class="token string">"UTF-8"</span><span class="token punctuation">,</span> <span class="token comment"># encoding of the output file</span>
+                    destCRS <span class="token operator">=</span> rice_layer<span class="token punctuation">.</span>crs<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment"># projection of the output file</span>
+                    driverName <span class="token operator">=</span><span class="token string">"GeoJSON"</span><span class="token punctuation">,</span> <span class="token comment"># output file format</span>
+                    onlySelected<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment"># write only selected features</span>
+
+<span class="token keyword keyword-if">if</span> error<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> QgsVectorFileWriter<span class="token punctuation">.</span>NoError<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Success: GeoJSON file has been created."</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Error: Failed to write GeoJSON."</span><span class="token punctuation">)</span>
+</code></pre><hr>
 <h4 id="challenge-a-import-your-file">Challenge A: Import your file </h4>
 <p>Now that you've created a new GeoJSON file with the subset of rice crops, try loading it into QGIS and exploring the data using <code>output_path</code> and <code>iface.addVectorLayer()</code></p>
 <h4 id="challenge-b-writing-to-a-shapefile">Challenge B: Writing to a Shapefile </h4>
@@ -181,9 +219,107 @@ error <span class="token operator">=</span> QgsVectorFileWriter<span class="toke
 <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Error: Failed to write Shapefile."</span><span class="token punctuation">)</span>
 
-</code></pre><h3 id="recap">Recap </h3>
+</code></pre><h3 id="conclusion">Conclusion </h3>
 <p>In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, subset the data for rice crops, and write the results to a new file. We also explored how to write the output to a Shapefile by consulting the QGIS API documentation.</p>
 <hr>
+<hr>
+<h2 id="tutorial-2-counting-observations-by-crop-type-in-qgis">Tutorial 2: Counting Observations by Crop Type in QGIS </h2>
+<p>In this tutorial, we will learn how to load a vector layer into QGIS, access its attribute data, and perform a basic analysis by counting the number of observations for each crop type using the <code>primary_crop</code> field from the <code>tz_labels.geojson</code> dataset.</p>
+<h3 id="step-1-load-the-vector-layer">Step 1: Load the Vector Layer </h3>
+<p>First, let’s load the <code>tz_labels.geojson</code> into QGIS. Open the Python console in QGIS and use the following command to add the layer:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Load the tz_labels.geojson file</span>
+layer_path <span class="token operator">=</span> <span class="token string">"/path/to/tz_labels.geojson"</span>  <span class="token comment"># Update this path to your file's location</span>
+tz_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>layer_path<span class="token punctuation">,</span> <span class="token string">"TZ Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> tz_labels_layer<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Failed to load the layer."</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer loaded successfully."</span><span class="token punctuation">)</span>
+</code></pre><h3 id="using-dictionaries-to-count-items-in-python">Using Dictionaries to Count Items in Python </h3>
+<p>In Python, a dictionary is a collection of key-value pairs where each key is unique. This structure is ideal for counting occurrences of items because you can use the item as the key and its count as the value.</p>
+<h4 id="basic-example-of-counting-with-dictionaries">Basic Example of Counting with Dictionaries </h4>
+<p>Let’s look at a simple example using a list of fruits to illustrate how we can use a dictionary to count occurrences.</p>
+<ol>
+<li><em>List of Fruits</em>: We start with a list of fruits where some fruits may appear multiple times.</li>
+</ol>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># List of fruits</span>
+fruits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'apple'</span><span class="token punctuation">,</span> <span class="token string">'banana'</span><span class="token punctuation">,</span> <span class="token string">'orange'</span><span class="token punctuation">,</span> <span class="token string">'apple'</span><span class="token punctuation">,</span> <span class="token string">'orange'</span><span class="token punctuation">,</span> <span class="token string">'banana'</span><span class="token punctuation">,</span> <span class="token string">'orange'</span><span class="token punctuation">]</span>
+</code></pre><ol start="2">
+<li><em>Initialize the Dictionary</em>: We start with an empty dictionary <code>fruit_counts</code> where each fruit name will be a key, and the count of that fruit will be the corresponding value.</li>
+</ol>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Initialize a dictionary to hold the count of each fruit</span>
+fruit_counts <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre><ol start="3">
+<li><em>Iterate Through the List</em>: We loop through each element in the <code>fruits</code> list.</li>
+<li><em>Update the Dictionary</em>: As we move through the elements of <code>fruits</code> list, we update the <code>fruit_counts</code> dictionary:
+<ul>
+<li>If the fruit is already a key in the dictionary (<code>if fruit in fruit_counts</code>), we increase its count by 1.</li>
+<li>If the fruit is not yet a new <code>fruit</code> key in the dictionary, we add it and set its count to 1.</li>
+</ul>
+</li>
+</ol>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Iterate over the list of fruits</span>
+<span class="token keyword keyword-for">for</span> fruit <span class="token keyword keyword-in">in</span> fruits<span class="token punctuation">:</span>
+    <span class="token keyword keyword-if">if</span> fruit <span class="token keyword keyword-in">in</span> fruit_counts<span class="token punctuation">:</span>
+        fruit_counts<span class="token punctuation">[</span>fruit<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>  <span class="token comment"># Increment the count if the fruit is already in the dictionary</span>
+    <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+        fruit_counts<span class="token punctuation">[</span>fruit<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>  <span class="token comment"># Set the count to 1 if the fruit is not in the dictionary yet</span>
+</code></pre><ol start="5">
+<li><em>Print the Results</em>: After the loop, we print each fruit and its count. The <code>items()</code> method returns a list of tuple pairs (key, value) from the dictionary.</li>
+</ol>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Print the counts for each fruit</span>
+<span class="token keyword keyword-for">for</span> fruit<span class="token punctuation">,</span> count <span class="token keyword keyword-in">in</span> fruit_counts<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>fruit<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>count<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+</code></pre><p><strong>Output</strong>:<br>
+The following is the output of the code snippet above:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>apple<span class="token punctuation">:</span> <span class="token number">2</span>
+banana<span class="token punctuation">:</span> <span class="token number">2</span>
+orange<span class="token punctuation">:</span> <span class="token number">3</span>
+</code></pre><h3 id="step-2-applying-this-to-qgis-data">Step 2: Applying This to QGIS Data </h3>
+<p>We can apply the same technique to count crop types from a feature layer in QGIS. Here’s how it connects to our GIS data example:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Suppose we have a layer loaded as tz_labels_layer and it contains a field 'primary_crop'</span>
+
+<span class="token comment"># Initialize a dictionary to hold the count of each crop type</span>
+crop_counts <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token comment"># Access the features (rows) in the layer</span>
+<span class="token keyword keyword-for">for</span> feature <span class="token keyword keyword-in">in</span> tz_labels_layer<span class="token punctuation">.</span>getFeatures<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Get the value of the 'primary_crop' field</span>
+    crop_type <span class="token operator">=</span> feature<span class="token punctuation">[</span><span class="token string">'primary_crop'</span><span class="token punctuation">]</span>
+    
+    <span class="token comment"># Use the dictionary counting method</span>
+    <span class="token keyword keyword-if">if</span> crop_type <span class="token keyword keyword-in">in</span> crop_counts<span class="token punctuation">:</span>
+        crop_counts<span class="token punctuation">[</span>crop_type<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+        crop_counts<span class="token punctuation">[</span>crop_type<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+
+<span class="token comment"># Print the counts for each crop type</span>
+<span class="token keyword keyword-for">for</span> crop<span class="token punctuation">,</span> count <span class="token keyword keyword-in">in</span> crop_counts<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>crop<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>count<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+</code></pre><p>Your output should be as follows:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>maize: <span class="token number">403</span>
+rice: <span class="token number">280</span>
+soybeans: <span class="token number">10</span>
+sunflower: <span class="token number">278</span>
+peanuts: <span class="token number">13</span>
+fallow_barren: <span class="token number">1</span>
+cassava: <span class="token number">76</span>
+sorghum: <span class="token number">131</span>
+okra: <span class="token number">2</span>
+millet: <span class="token number">139</span>
+no: <span class="token number">5</span>
+cotton: <span class="token number">50</span>
+don_t_know: <span class="token number">2</span>
+large_building: <span class="token number">1</span>
+forest_shrubland: <span class="token number">2</span>
+could be maize.: <span class="token number">1</span>
+water_body: <span class="token number">1</span>
+water: <span class="token number">5</span>
+</code></pre><p>This method efficiently tracks the number of occurrences of each crop type, providing a quick summary of the data in your GIS layer. By leveraging Python dictionaries, you can easily extend this approach to count various attributes across different datasets in QGIS.</p>
+<hr>
+<h4 id="challenge-c-count-observations-by-field-size">Challenge C: Count observations by field size </h4>
+<p>Our <code>tz_labels.geojson</code> dataset contains a field named <code>field_size</code> that represents the size of each field. Try adapting the code to count the number of observations for each field size category.</p>
+<h3 id="conclusion-1">Conclusion </h3>
+<p>This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided <code>tz_labels.geojson</code>. This process can be adapted to other datasets and attributes for various analytical needs.</p>
 
       </div>
       
