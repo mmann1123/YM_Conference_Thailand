@@ -2,8 +2,7 @@
 
 Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-source geographic information system (GIS) that supports various GIS operations and spatial data management. One of the fantastic features of QGIS is its built-in Python console, which allows you to enhance your GIS projects with programming.
 
-QGIS brings a Python API (see [PyQGIS Developer Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/) for some code samples) to let the user 
- interact with its objects (layers, features, or interface). QGIS also has a Python console.
+QGIS brings a Python API (see [PyQGIS Developer Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/) for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.
 
 
 ## Accessing the Python Console in QGIS
@@ -187,7 +186,49 @@ else:
 Your `output_path` should be a new file in the same directory as the original file. You can now load this new file into QGIS to see the subset of rice crops.
 
 ---
+#### Full Script
+The following is the full script that you can run in the QGIS Python console to read a GeoJSON file, subset the data for rice crops, and write the results to a new file.
 
+```python
+from qgis.core import *
+import qgis.utils
+
+# Path to the GeoJSON file
+file_path = 'path_to_your_file/tz_labels.geojson'
+
+# Load the layer in
+rice_layer = iface.addVectorLayer(file_path,   # path to the file
+                                 baseName= "Rice Crops",  # name of the layer in QGIS
+                                 providerKey="ogr") # how to read it
+if not rice_layer:
+    print("Layer failed to load!")
+else:
+    print("Layer loaded successfully!")
+
+# Select features where the crop type is 'Rice'
+rice_layer.selectByExpression("\"primary_crop\" = 'maize'")
+# Print the number of selected rows
+print(f"Number of selected rows: {rice_layer.selectedFeatureCount()}")
+
+
+# Define the output file path
+output_path = 'path_to_output/rice_subset.geojson'
+
+# Write the selected features to a new GeoJSON
+error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
+                    fileName = output_path, # path and name of the output file
+                    fileEncoding = "UTF-8", # encoding of the output file
+                    destCRS = rice_layer.crs(),  # projection of the output file
+                    driverName ="GeoJSON", # output file format
+                    onlySelected=True) # write only selected features
+
+if error[0] == QgsVectorFileWriter.NoError:
+    print("Success: GeoJSON file has been created.")
+else:
+    print("Error: Failed to write GeoJSON.")
+```
+
+---
 #### Challenge A: Import your file
 
 Now that you've created a new GeoJSON file with the subset of rice crops, try loading it into QGIS and exploring the data using `output_path` and `iface.addVectorLayer()`
