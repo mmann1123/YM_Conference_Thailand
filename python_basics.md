@@ -52,12 +52,11 @@ The toolbar proposes the following tools:
 - Options... ![options](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true): opens a dialog to configure console properties;
 
 - Help... ![helpContents](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true) provides a menu to access various documentation:
+  - [PyQGIS Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/)
   - [Python Console Help](https://docs.qgis.org/latest/en/docs/user_manual/plugins/python_console.html)
   - [PyQGIS API documentation](https://qgis.org/api/)
-  - [PyQGIS Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/)
 
-Dock Code Editor ![dock](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true) to dock or undock the panel in QGIS interface.
-
+ 
 
 ## Python Tutorial: Understanding Variables <a name="variables"></a>
 
