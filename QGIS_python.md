@@ -55,13 +55,13 @@ Let’s get started with some basic commands to familiarize you with the Python 
 
 ---
 
-### Introduction to Python Modules
+## Introduction to Python Modules
 
 In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts. 
 
 Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.
 
-#### Importing Modules in Python
+### Importing Modules in Python
 
 To use a module in Python, you need to import it into your script using the `import` statement. Once a module is imported, you can call its functions or access its classes and variables using the dot notation.
 
@@ -98,7 +98,9 @@ import qgis.utils
 ```
 
 With these imports, you’re now ready to use the QGIS Python API to enhance your GIS projects with automated scripts and customized functionality!
- 
+
+---
+
 ## Tutorial: Working with Crop Types in QGIS Python
 
 In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.
@@ -108,16 +110,23 @@ In this part of our tutorial, we'll learn how to read a GeoJSON file that contai
 First, we need to load our GeoJSON file into QGIS. We'll use the `iface` object, which is a part of the QGIS Python API that represents the main interface of QGIS.
 
 ```python
+from qgis.core import *
+import qgis.utils
+
 # Path to the GeoJSON file
 file_path = 'path_to_your_file/tz_labels.geojson'
 
 # Load the layer in 
-rice_layer = iface.addVectorLayer(file_path, "Rice Crops", "ogr")
+rice_layer = iface.addVectorLayer(file_path,   # path to the file
+                                 baseName= "Rice Crops",  # name of the layer in QGIS
+                                 providerKey="ogr") # how to read it
 if not rice_layer:
     print("Layer failed to load!")
 else:
     print("Layer loaded successfully!")
 ```
+
+Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
 
 You should now see `Rice Crops` in your QGIS Layers Panel. This layer contains the crop types data from the GeoJSON file.
 
@@ -147,8 +156,11 @@ rice_layer.selectByExpression("\"primary_crop\" = 'maize'")
 print(f"Number of selected rows: {rice_layer.selectedFeatureCount()}")
 ```
 
+Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
+
 > **Note:**
 For more on how to create expressions in Qgis see [Select Expressions](https://mmann1123.github.io/YM_Conference_Thailand/select_expressions.html)
+
 
 ### Step 3: Writing the Subset to a New GeoJSON File
 
@@ -159,7 +171,13 @@ After subsetting the data, let's write the selected features to a new GeoJSON fi
 output_path = 'path_to_output/rice_subset.geojson'
 
 # Write the selected features to a new GeoJSON
-error = QgsVectorFileWriter.writeAsVectorFormat(rice_layer, output_path, "UTF-8", rice_layer.crs(), "GeoJSON", onlySelected=True)
+error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
+                    fileName = output_path, # path and name of the output file
+                    fileEncoding = "UTF-8", # encoding of the output file
+                    destCRS = rice_layer.crs(),  # projection of the output file
+                    driverName ="GeoJSON", # output file format
+                    onlySelected=True) # write only selected features
+
 if error[0] == QgsVectorFileWriter.NoError:
     print("Success: GeoJSON file has been created.")
 else:
@@ -168,8 +186,13 @@ else:
 
 Your `output_path` should be a new file in the same directory as the original file. You can now load this new file into QGIS to see the subset of rice crops.
 
+---
 
-### Variant: Writing to a Shapefile
+#### Challenge A: Import your file
+
+Now that you've created a new GeoJSON file with the subset of rice crops, try loading it into QGIS and exploring the data using `output_path` and `iface.addVectorLayer()`
+
+#### Challenge B: Writing to a Shapefile
 
 If you want to write the output to a Shapefile instead, you'll need to consult the QGIS API documentation to learn about the parameters required for writing a Shapefile. Here's how you might start:
 
@@ -182,12 +205,22 @@ Here’s a hint on how you might adjust the code for writing a Shapefile:
 # Define the output file path for the Shapefile
 output_path_shp = 'path_to_output/rice_subset.shp'
 
-# Write the selected features to a new Shapefile
-error_shp = QgsVectorFileWriter.writeAsVectorFormat(rice_layer, output_path_shp, "UTF-8", rice_layer.crs(), "ESRI Shapefile", onlySelected=True)
+error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
+                    fileName = output_path_shp, # path and name of the output file
+                    fileEncoding = "UTF-8", # encoding of the output file
+                    destCRS = rice_layer.crs(),  # projection of the output file
+                    driverName = __________________, # output file format
+                    onlySelected=True) # write only selected features
+
 if error_shp[0] == QgsVectorFileWriter.NoError:
     print("Success: Shapefile has been created.")
 else:
     print("Error: Failed to write Shapefile.")
+
 ```
 
-This activity introduces basic file operations and querying in QGIS using Python, providing a practical understanding of spatial data manipulation and output.
+### Recap 
+
+In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, subset the data for rice crops, and write the results to a new file. We also explored how to write the output to a Shapefile by consulting the QGIS API documentation.
+
+---
