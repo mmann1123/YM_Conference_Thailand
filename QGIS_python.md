@@ -397,7 +397,7 @@ print(f"Proj4 description: {crs.toProj()}")
 ```
 Here the Proj4 string will contain the linear unit of the projection. For example, if the unit is in meters, you will see `+units=m` in the Proj4 string.
 
-### Step 2: Calculating Total Area
+### Step 3: Calculating Total Area
 
 Once the layer is loaded, we can calculate the total area of the polygons. Since the area will be calculated in the layer's coordinate reference system units, we need to convert these units to acres. The conversion factor from square meters to acres is approximately 0.000247105.
 
