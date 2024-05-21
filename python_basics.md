@@ -269,3 +269,7 @@ print(result)
 ```
 
 Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
+
+---
+
+> This tutorial continues in the next section [Introduction to Python in QGIS](https://mmann1123.github.io/YM_Conference_Thailand/QGIS_python.html)
