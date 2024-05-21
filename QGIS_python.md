@@ -116,16 +116,20 @@ if not rice_layer:
 else:
     print("Layer loaded successfully!")
 ```
+
 You should now see `Rice Crops` in your QGIS Layers Panel. This layer contains the crop types data from the GeoJSON file.
+
+![Crop ](images/rice_crops.png)
 
 <br>
 
-> *Where do I find the path to my file?*
+>  *Where do I find the path to my file?*  
 
 In order to load a file into python you will need to find the 'path' to the `tz_labels.geojson` file.  Start by `Layer` > `Add Layer` > `Add Vector Layer`. Then in your layers list `right-click` on `tz_labels` and select `Properties`.  In the `General` tab you will find the `Layer Source` which is the path to your file.  Copy and paste this path into the `file_path` variable in the code above.
 
 
-![Layer Properties](https://github.com/mmann1123/GEOG6308/blob/main/layer_path.png?raw=true)
+![Layer Properties](https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/layer_path.png?raw=true)
+*Make sure your path doesn't include ``'file://'`` at the beginning.*
 
 
 ### Step 2: Subsetting the Data for Rice Crops
@@ -134,8 +138,9 @@ Next, we'll filter out the rice crops from our dataset. We'll assume that the cr
 
 ```python
 # Select features where the crop type is 'Rice'
-rice_layer.selectByExpression(" \"crop_type\" = 'Rice' ")
+rice_layer.selectByExpression(r" \"primar\" = 'rice' ")
 ```
+> For more on how to create expressions in Qgis see [Select Expressions](
 
 ### Step 3: Writing the Subset to a New GeoJSON File
 

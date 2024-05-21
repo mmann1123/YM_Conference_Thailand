@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+<link rel="stylesheet" href="file:////home/mmann1123/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+
+</head>
+<body class="markdown-body">
+<h1 dir="auto" id="introduction-to-python-in-qgis">Introduction to Python in QGIS</h1>
+<p dir="auto">Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-source geographic information system (GIS) that supports various GIS operations and spatial data management. One of the fantastic features of QGIS is its built-in Python console, which allows you to enhance your GIS projects with programming.</p>
+<p dir="auto">QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user
+interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
+<h2 dir="auto" id="accessing-the-python-console-in-qgis">Accessing the Python Console in QGIS</h2>
+<p dir="auto">To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
+<ol dir="auto">
+<li dir="auto"><strong>Open QGIS</strong>: Start by launching the QGIS application on your computer.</li>
+<li dir="auto"><strong>Open the Python Console</strong>: Look for a button on the toolbar that resembles a Python logo or go to the menu bar and select <code>Plugins</code> -&gt; <code>Python Console</code>. This will open a small scripting window at the bottom or side of your QGIS workspace.</li>
+</ol>
+<p dir="auto">The Python console in QGIS is split into two main parts:</p>
+<ul dir="auto">
+<li dir="auto"><strong>The command line</strong>: This is where you can type single lines of Python code and execute them immediately.</li>
+<li dir="auto"><strong>The editor</strong>: Here, you can write more complex scripts, save them, and run them as needed.</li>
+</ul>
+<p dir="auto">This dual setup allows you to quickly test small pieces of code and develop more extensive scripts for automating tasks.</p>
+<h2 dir="auto" id="qgis-python-console">QGIS Python Console</h2>
+<p dir="auto">The console is a Python interpreter that allows you to execute Python commands. Modules from QGIS (analysis, core, gui, server, processing, 3d) and Qt (QtCore, QtGui, QtNetwork, QtWidgets, QtXml) as well as Python's math, os, re, and sys modules are already imported and can be used directly.</p>
+<p dir="auto">The interactive console is composed of a toolbar, an input area, and an output area.
+<img src="https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console.png?raw=true" alt="The Python Console" data-src="https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console.png?raw=true"></p>
+<h3 dir="auto" id="toolbar">Toolbar</h3>
+<p dir="auto">The toolbar proposes the following tools:</p>
+<ul dir="auto">
+<li dir="auto">
+<p dir="auto">Clear Console <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true"> to wipe the output area;</p>
+</li>
+<li dir="auto">
+<p dir="auto">Run Command <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true" alt="start" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true"> available in the input area: same as pressing Enter;</p>
+</li>
+<li dir="auto">
+<p dir="auto">Show Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconShowEditorConsole.png?raw=true" alt="showEditorConsole" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconShowEditorConsole.png?raw=true">: toggles console editor visibility;</p>
+</li>
+<li dir="auto">
+<p dir="auto">Options... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true" alt="options" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true">: opens a dialog to configure console properties;</p>
+</li>
+<li dir="auto">
+<p dir="auto">Help... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true" alt="helpContents" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true"> provides a menu to access various documentation:</p>
+<ul dir="auto">
+<li dir="auto"><a href="https://docs.qgis.org/latest/en/docs/user_manual/plugins/python_console.html">Python Console Help</a></li>
+<li dir="auto"><a href="https://qgis.org/api/">PyQGIS API documentation</a></li>
+<li dir="auto"><a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Cookbook</a></li>
+</ul>
+</li>
+</ul>
+<p dir="auto">Dock Code Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true" alt="dock" data-src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true"> to dock or undock the panel in QGIS interface.</p>
+<h4 dir="auto" id="why-use-python-in-qgis">Why Use Python in QGIS?</h4>
+<p dir="auto">Using Python in QGIS allows you to automate repetitive tasks, manipulate spatial data in ways that are cumbersome or impossible with the GUI alone, and extend the functionality of QGIS through custom scripts and plugins.</p>
+<p dir="auto">Throughout this tutorial, we will explore simple Python commands and scripts that you can execute in the Python console to interact with QGIS and perform basic GIS operations. These activities are designed to be fun and engaging, providing you with a hands-on introduction to programming within a GIS environment.</p>
+<p dir="auto">Let’s get started with some basic commands to familiarize you with the Python console in QGIS!</p>
+<hr dir="auto">
+<h3 dir="auto" id="introduction-to-python-modules">Introduction to Python Modules</h3>
+<p dir="auto">In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts.</p>
+<p dir="auto">Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.</p>
+<h4 dir="auto" id="importing-modules-in-python">Importing Modules in Python</h4>
+<p dir="auto">To use a module in Python, you need to import it into your script using the <code>import</code> statement. Once a module is imported, you can call its functions or access its classes and variables using the dot notation.</p>
+<p dir="auto">For example, to import the Python <code>math</code> module, you would write:</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-keyword">import</span> math
+</code></pre>
+<p dir="auto">Now you can use functions within the <code>math</code> module:</p>
+<pre><code class="code-line language-python" dir="auto">result = math.sqrt(<span class="hljs-number">25</span>)  <span class="hljs-comment"># Computes the square root of 25</span>
+<span class="hljs-built_in">print</span>(result)
+</code></pre>
+<h3 dir="auto" id="using-python-with-qgis">Using Python with QGIS</h3>
+<p dir="auto">QGIS extends Python’s capabilities by providing a specialized module called <code>qgis</code>. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.</p>
+<p dir="auto">To start scripting with Python in QGIS, you'll first need to import the necessary modules provided by QGIS. These typically include:</p>
+<ul dir="auto">
+<li dir="auto"><code>qgis.core</code>: Provides core functionality like managing and manipulating vector and raster layers.</li>
+<li dir="auto"><code>qgis.utils</code>: Contains utility functions for interacting with the QGIS interface.</li>
+<li dir="auto"><code>iface</code>: A special variable from the <code>qgis.utils</code> module representing the QGIS interface, allowing you to interact with the application itself, like opening and displaying layers.</li>
+</ul>
+<p dir="auto">Here’s how to import these modules into your QGIS Python script:</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-keyword">from</span> qgis.core <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">import</span> qgis.utils
+</code></pre>
+<p dir="auto">With these imports, you’re now ready to use the QGIS Python API to enhance your GIS projects with automated scripts and customized functionality!</p>
+<h2 dir="auto" id="tutorial-working-with-crop-types-in-qgis-python">Tutorial: Working with Crop Types in QGIS Python</h2>
+<p dir="auto">In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.</p>
+<h3 dir="auto" id="step-1-reading-the-geojson-file">Step 1: Reading the GeoJSON File</h3>
+<p dir="auto">First, we need to load our GeoJSON file into QGIS. We'll use the <code>iface</code> object, which is a part of the QGIS Python API that represents the main interface of QGIS.</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-comment"># Path to the GeoJSON file</span>
+file_path = <span class="hljs-string">&#x27;path_to_your_file/tz_labels.geojson&#x27;</span>
+
+<span class="hljs-comment"># Load the layer in </span>
+rice_layer = iface.addVectorLayer(file_path, <span class="hljs-string">&quot;Rice Crops&quot;</span>, <span class="hljs-string">&quot;ogr&quot;</span>)
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> rice_layer:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Layer failed to load!&quot;</span>)
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Layer loaded successfully!&quot;</span>)
+</code></pre>
+<p dir="auto">You should now see <code>Rice Crops</code> in your QGIS Layers Panel. This layer contains the crop types data from the GeoJSON file.</p>
+<p dir="auto"><img src="images/rice_crops.png" alt="Crop " data-src="images/rice_crops.png"></p>
+<div  dir="auto" ></div>
+<br>
+<blockquote dir="auto">
+<p dir="auto"><em>Where do I find the path to my file?</em></p>
+</blockquote>
+<p dir="auto">In order to load a file into python you will need to find the 'path' to the <code>tz_labels.geojson</code> file.  Start by <code>Layer</code> &gt; <code>Add Layer</code> &gt; <code>Add Vector Layer</code>. Then in your layers list <code>right-click</code> on <code>tz_labels</code> and select <code>Properties</code>.  In the <code>General</code> tab you will find the <code>Layer Source</code> which is the path to your file.  Copy and paste this path into the <code>file_path</code> variable in the code above.</p>
+<p dir="auto"><img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/layer_path.png?raw=true" alt="Layer Properties" data-src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/layer_path.png?raw=true">
+<em>Make sure your path doesn't include <code>'file://'</code> at the beginning.</em></p>
+<h3 dir="auto" id="step-2-subsetting-the-data-for-rice-crops">Step 2: Subsetting the Data for Rice Crops</h3>
+<p dir="auto">Next, we'll filter out the rice crops from our dataset. We'll assume that the crop types are stored in a field named <code>crop_type</code>.</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-comment"># Select features where the crop type is &#x27;Rice&#x27;</span>
+rice_layer.selectByExpression(<span class="hljs-string">r&quot; \&quot;primar\&quot; = &#x27;rice&#x27; &quot;</span>)
+</code></pre>
+<blockquote dir="auto">
+<p dir="auto">For more on how to create expressions in Qgis see [Select Expressions](</p>
+</blockquote>
+<h3 dir="auto" id="step-3-writing-the-subset-to-a-new-geojson-file">Step 3: Writing the Subset to a New GeoJSON File</h3>
+<p dir="auto">After subsetting the data, let's write the selected features to a new GeoJSON file.</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-comment"># Define the output file path</span>
+output_path = <span class="hljs-string">&#x27;path_to_output/rice_subset.geojson&#x27;</span>
+
+<span class="hljs-comment"># Write the selected features to a new GeoJSON</span>
+error = QgsVectorFileWriter.writeAsVectorFormat(rice_layer, output_path, <span class="hljs-string">&quot;UTF-8&quot;</span>, rice_layer.crs(), <span class="hljs-string">&quot;GeoJSON&quot;</span>, onlySelected=<span class="hljs-literal">True</span>)
+<span class="hljs-keyword">if</span> error[<span class="hljs-number">0</span>] == QgsVectorFileWriter.NoError:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Success: GeoJSON file has been created.&quot;</span>)
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Error: Failed to write GeoJSON.&quot;</span>)
+
+</code></pre>
+<h3 dir="auto" id="variant-writing-to-a-shapefile">Variant: Writing to a Shapefile</h3>
+<p dir="auto">If you want to write the output to a Shapefile instead, you'll need to consult the QGIS API documentation to learn about the parameters required for writing a Shapefile. Here's how you might start:</p>
+<ol dir="auto">
+<li dir="auto">Open the QGIS Python API documentation: <a href="https://docs.qgis.org/3.34/en/docs/pyqgis_developer_cookbook/vector.html#creating-vector-layers">QGIS Cook Book</a></li>
+<li dir="auto">Search for <code>QgsVectorFileWriter</code> and read about the different parameters you can use, especially how to specify the output format for a Shapefile.</li>
+</ol>
+<p dir="auto">Here’s a hint on how you might adjust the code for writing a Shapefile:</p>
+<pre><code class="code-line language-python" dir="auto"><span class="hljs-comment"># Define the output file path for the Shapefile</span>
+output_path_shp = <span class="hljs-string">&#x27;path_to_output/rice_subset.shp&#x27;</span>
+
+<span class="hljs-comment"># Write the selected features to a new Shapefile</span>
+error_shp = QgsVectorFileWriter.writeAsVectorFormat(rice_layer, output_path_shp, <span class="hljs-string">&quot;UTF-8&quot;</span>, rice_layer.crs(), <span class="hljs-string">&quot;ESRI Shapefile&quot;</span>, onlySelected=<span class="hljs-literal">True</span>)
+<span class="hljs-keyword">if</span> error_shp[<span class="hljs-number">0</span>] == QgsVectorFileWriter.NoError:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Success: Shapefile has been created.&quot;</span>)
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Error: Failed to write Shapefile.&quot;</span>)
+</code></pre>
+<p dir="auto">This activity introduces basic file operations and querying in QGIS using Python, providing a practical understanding of spatial data manipulation and output.</p>
+
+</body>
+</html>
