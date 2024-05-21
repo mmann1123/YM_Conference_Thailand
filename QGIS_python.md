@@ -4,9 +4,13 @@ Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-sourc
 
 QGIS brings a Python API (see [PyQGIS Developer Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/) for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.
 
-## Table of contents
+## *Table of contents*
 1. [Python Modules](#modules)
+2. [Using Python with QGIS](#using_qgis)
+3. [Tutorial 1: Working with Crop Types in QGIS Python](#tutorial1)
+4. [Tutorial 2: Counting Observations by Crop Type in QGIS](#tutorial2)
 
+---
 
 ## Accessing the Python Console in QGIS
 
@@ -82,7 +86,7 @@ print(result)
 
 Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
 
-### Using Python with QGIS
+### Using Python with QGIS <a name="using_qgis"></a>
 
 QGIS extends Python’s capabilities by providing a specialized module called `qgis`. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.
 
@@ -103,7 +107,7 @@ With these imports, you’re now ready to use the QGIS Python API to enhance you
 
 ---
 
-## Tutorial 1: Working with Crop Types in QGIS Python
+## Tutorial 1: Working with Crop Types in QGIS Python <a name="tutorial1"></a>
 
 In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.
 
@@ -270,7 +274,7 @@ In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, s
 ---
 ---
 
-## Tutorial 2: Counting Observations by Crop Type in QGIS
+## Tutorial 2: Counting Observations by Crop Type in QGIS <a name="tutorial2"></a>
 
 In this tutorial, we will learn how to load a vector layer into QGIS, access its attribute data, and perform a basic analysis by counting the number of observations for each crop type using the `primary_crop` field from the `tz_labels.geojson` dataset.
 

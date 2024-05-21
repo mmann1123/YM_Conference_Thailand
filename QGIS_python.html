@@ -27,10 +27,14 @@
 <h1 id="introduction-to-python-in-qgis">Introduction to Python in QGIS </h1>
 <p>Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-source geographic information system (GIS) that supports various GIS operations and spatial data management. One of the fantastic features of QGIS is its built-in Python console, which allows you to enhance your GIS projects with programming.</p>
 <p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
-<h1 id="table-of-contents">Table of contents </h1>
+<h2 id="table-of-contents"><em>Table of contents</em> </h2>
 <ol>
 <li><a href="#modules">Python Modules</a></li>
+<li><a href="#using_qgis">Using Python with QGIS</a></li>
+<li><a href="#tutorial1">Tutorial 1: Working with Crop Types in QGIS Python</a></li>
+<li><a href="#tutorial2">Tutorial 2: Counting Observations by Crop Type in QGIS</a></li>
 </ol>
+<hr>
 <h2 id="accessing-the-python-console-in-qgis">Accessing the Python Console in QGIS </h2>
 <p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
 <ol>
@@ -88,7 +92,7 @@
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code>result <span class="token operator">=</span> math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span>  <span class="token comment"># Computes the square root of 25</span>
 <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
 </code></pre><p>Paste these lines into the Python console in QGIS to see the output and press <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true" alt="start"></p>
-<h3 id="using-python-with-qgis">Using Python with QGIS </h3>
+<h3 id="using-python-with-qgis-a-nameusing_qgisa">Using Python with QGIS <a name="using_qgis" href=""></a> </h3>
 <p>QGIS extends Python’s capabilities by providing a specialized module called <code>qgis</code>. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.</p>
 <p>To start scripting with Python in QGIS, you'll first need to import the necessary modules provided by QGIS. These typically include:</p>
 <ul>
@@ -101,7 +105,7 @@
 <span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
 </code></pre><p>With these imports, you’re now ready to use the QGIS Python API to enhance your GIS projects with automated scripts and customized functionality!</p>
 <hr>
-<h2 id="tutorial-1-working-with-crop-types-in-qgis-python">Tutorial 1: Working with Crop Types in QGIS Python </h2>
+<h2 id="tutorial-1-working-with-crop-types-in-qgis-python-a-nametutorial1a">Tutorial 1: Working with Crop Types in QGIS Python <a name="tutorial1" href=""></a> </h2>
 <p>In this part of our tutorial, we'll learn how to read a GeoJSON file that contains various crop types, subset the data for rice crops, and then write the results to a new file. We will also explore a variant where you'll learn to write the results to a Shapefile instead by reading the QGIS API documentation.</p>
 <h3 id="step-1-reading-the-geojson-file">Step 1: Reading the GeoJSON File </h3>
 <p>First, we need to load our GeoJSON file into QGIS. We'll use the <code>iface</code> object, which is a part of the QGIS Python API that represents the main interface of QGIS.</p>
@@ -227,7 +231,7 @@ error <span class="token operator">=</span> QgsVectorFileWriter<span class="toke
 <p>In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, subset the data for rice crops, and write the results to a new file. We also explored how to write the output to a Shapefile by consulting the QGIS API documentation.</p>
 <hr>
 <hr>
-<h2 id="tutorial-2-counting-observations-by-crop-type-in-qgis">Tutorial 2: Counting Observations by Crop Type in QGIS </h2>
+<h2 id="tutorial-2-counting-observations-by-crop-type-in-qgis-a-nametutorial2a">Tutorial 2: Counting Observations by Crop Type in QGIS <a name="tutorial2" href=""></a> </h2>
 <p>In this tutorial, we will learn how to load a vector layer into QGIS, access its attribute data, and perform a basic analysis by counting the number of observations for each crop type using the <code>primary_crop</code> field from the <code>tz_labels.geojson</code> dataset.</p>
 <h3 id="step-1-load-the-vector-layer">Step 1: Load the Vector Layer </h3>
 <p>First, let’s load the <code>tz_labels.geojson</code> into QGIS. Open the Python console in QGIS and use the following command to add the layer:</p>
