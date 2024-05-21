@@ -6,92 +6,22 @@ QGIS brings a Python API (see [PyQGIS Developer Cookbook](https://docs.qgis.org/
 
 ## *Table of contents*
 
-1. [The Python Console in QGIS](#console)
-2. [Python Modules](#modules)
-3. [Using Python with QGIS](#using_qgis)
-4. [Tutorial 1: Working with Crop Types in QGIS Python](#tutorial1)
-5. [Tutorial 2: Counting Observations by Crop Type in QGIS](#tutorial2)
-6. [Tutorial 3: Calculating Area of Polygons Using QGIS Python](#tutorial3)
-7. [Challenge Question Answers](#answers)
+1. [Using the qgis Module in Python](#using_qgis)
+2. [Tutorial 1: Working with Crop Types in QGIS Python](#tutorial1)
+3. [Tutorial 2: Counting Observations by Crop Type in QGIS](#tutorial2)
+4. [Tutorial 3: Calculating Area of Polygons Using QGIS Python](#tutorial3)
+5. [Challenge Question Answers](#answers)
 
 
----
-
-## The Python Console in QGIS <a name="console"></a>
-
-To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:
-
-1. **Open QGIS**: Start by launching the QGIS application on your computer.
-2. **Open the Python Console**: Look for a button on the toolbar that resembles a Python logo or go to the menu bar and select `Plugins` -> `Python Console`. This will open a small scripting window at the bottom or side of your QGIS workspace.
-
-The Python console in QGIS is split into two main parts:
-- **The command line**: This is where you can type single lines of Python code and execute them immediately.
-- **The editor**: Here, you can write more complex scripts, save them, and run them as needed.
-
-This dual setup allows you to quickly test small pieces of code and develop more extensive scripts for automating tasks.
-
-## QGIS Python Console
-
-The console is a Python interpreter that allows you to execute Python commands. Modules from QGIS (analysis, core, gui, server, processing, 3d) and Qt (QtCore, QtGui, QtNetwork, QtWidgets, QtXml) as well as Python's math, os, re, and sys modules are already imported and can be used directly.
-
-The interactive console is composed of a toolbar, an input area, and an output area.
-![The Python Console](https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console.png?raw=true)
-
-
-### Toolbar
-
-The toolbar proposes the following tools:
-- Clear Console ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true) to wipe the output area;
-
-- Run Command ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true) available in the input area: same as pressing Enter;
-
-- Show Editor ![showEditorConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconShowEditorConsole.png?raw=true): toggles console editor visibility;
-
-- Options... ![options](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true): opens a dialog to configure console properties;
-
-- Help... ![helpContents](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true) provides a menu to access various documentation:
-  - [Python Console Help](https://docs.qgis.org/latest/en/docs/user_manual/plugins/python_console.html)
-  - [PyQGIS API documentation](https://qgis.org/api/)
-  - [PyQGIS Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/)
-
-Dock Code Editor ![dock](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true) to dock or undock the panel in QGIS interface.
-
-
-## Why Use Python in QGIS?
+## Why Use Python in QGIS? <a name="using_qgis"></a>
 Using Python in QGIS allows you to automate repetitive tasks, manipulate spatial data in ways that are cumbersome or impossible with the GUI alone, and extend the functionality of QGIS through custom scripts and plugins.
 
 Throughout this tutorial, we will explore simple Python commands and scripts that you can execute in the Python console to interact with QGIS and perform basic GIS operations. These activities are designed to be fun and engaging, providing you with a hands-on introduction to programming within a GIS environment.
 
 Let’s get started with some basic commands to familiarize you with the Python console in QGIS!
 
----
 
-## Introduction to Python Modules <a name="modules"></a>
-
-In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts. 
-
-Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.
-
-### Importing Modules in Python
-
-To use a module in Python, you need to import it into your script using the `import` statement. Once a module is imported, you can call its functions or access its classes and variables using the dot notation.
-
-For example, to import the Python `math` module, you would write:
-
-```python
-import math
-```
-
-Now you can use functions within the `math` module:
-
-```python
-result = math.sqrt(25)  # Computes the square root of 25
-print(result)
-```
-
-Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
-
-### Using Python with QGIS <a name="using_qgis"></a>
+### Using the qgis Module in Python
 
 QGIS extends Python’s capabilities by providing a specialized module called `qgis`. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.
 
@@ -516,7 +446,7 @@ for feature in sa_labels_layer.getFeatures():
 
     # Update the area_by_crop dictionary for the crop type
     # your code
-    
+
 # Print the total area for each crop type
 for crop, area in area_by_crop.items():
     print(f"{crop}: {area:.2f} acres")

@@ -29,73 +29,17 @@
 <p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
 <h2 id="table-of-contents"><em>Table of contents</em> </h2>
 <ol>
-<li><a href="#console">The Python Console in QGIS</a></li>
-<li><a href="#modules">Python Modules</a></li>
-<li><a href="#using_qgis">Using Python with QGIS</a></li>
+<li><a href="#using_qgis">Using the qgis Module in Python</a></li>
 <li><a href="#tutorial1">Tutorial 1: Working with Crop Types in QGIS Python</a></li>
 <li><a href="#tutorial2">Tutorial 2: Counting Observations by Crop Type in QGIS</a></li>
 <li><a href="#tutorial3">Tutorial 3: Calculating Area of Polygons Using QGIS Python</a></li>
 <li><a href="#answers">Challenge Question Answers</a></li>
 </ol>
-<hr>
-<h2 id="the-python-console-in-qgis-a-nameconsolea">The Python Console in QGIS <a name="console" href=""></a> </h2>
-<p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
-<ol>
-<li><strong>Open QGIS</strong>: Start by launching the QGIS application on your computer.</li>
-<li><strong>Open the Python Console</strong>: Look for a button on the toolbar that resembles a Python logo or go to the menu bar and select <code>Plugins</code> -&gt; <code>Python Console</code>. This will open a small scripting window at the bottom or side of your QGIS workspace.</li>
-</ol>
-<p>The Python console in QGIS is split into two main parts:</p>
-<ul>
-<li><strong>The command line</strong>: This is where you can type single lines of Python code and execute them immediately.</li>
-<li><strong>The editor</strong>: Here, you can write more complex scripts, save them, and run them as needed.</li>
-</ul>
-<p>This dual setup allows you to quickly test small pieces of code and develop more extensive scripts for automating tasks.</p>
-<h2 id="qgis-python-console">QGIS Python Console </h2>
-<p>The console is a Python interpreter that allows you to execute Python commands. Modules from QGIS (analysis, core, gui, server, processing, 3d) and Qt (QtCore, QtGui, QtNetwork, QtWidgets, QtXml) as well as Python's math, os, re, and sys modules are already imported and can be used directly.</p>
-<p>The interactive console is composed of a toolbar, an input area, and an output area.<br>
-<img src="https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console.png?raw=true" alt="The Python Console"></p>
-<h3 id="toolbar">Toolbar </h3>
-<p>The toolbar proposes the following tools:</p>
-<ul>
-<li>
-<p>Clear Console <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"> to wipe the output area;</p>
-</li>
-<li>
-<p>Run Command <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true" alt="start"> available in the input area: same as pressing Enter;</p>
-</li>
-<li>
-<p>Show Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconShowEditorConsole.png?raw=true" alt="showEditorConsole">: toggles console editor visibility;</p>
-</li>
-<li>
-<p>Options... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true" alt="options">: opens a dialog to configure console properties;</p>
-</li>
-<li>
-<p>Help... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true" alt="helpContents"> provides a menu to access various documentation:</p>
-<ul>
-<li><a href="https://docs.qgis.org/latest/en/docs/user_manual/plugins/python_console.html">Python Console Help</a></li>
-<li><a href="https://qgis.org/api/">PyQGIS API documentation</a></li>
-<li><a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Cookbook</a></li>
-</ul>
-</li>
-</ul>
-<p>Dock Code Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true" alt="dock"> to dock or undock the panel in QGIS interface.</p>
-<h2 id="why-use-python-in-qgis">Why Use Python in QGIS? </h2>
+<h2 id="why-use-python-in-qgis-a-nameusing_qgisa">Why Use Python in QGIS? <a name="using_qgis" href=""></a> </h2>
 <p>Using Python in QGIS allows you to automate repetitive tasks, manipulate spatial data in ways that are cumbersome or impossible with the GUI alone, and extend the functionality of QGIS through custom scripts and plugins.</p>
 <p>Throughout this tutorial, we will explore simple Python commands and scripts that you can execute in the Python console to interact with QGIS and perform basic GIS operations. These activities are designed to be fun and engaging, providing you with a hands-on introduction to programming within a GIS environment.</p>
 <p>Let’s get started with some basic commands to familiarize you with the Python console in QGIS!</p>
-<hr>
-<h2 id="introduction-to-python-modules-a-namemodulesa">Introduction to Python Modules <a name="modules" href=""></a> </h2>
-<p>In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts.</p>
-<p>Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.</p>
-<h3 id="importing-modules-in-python">Importing Modules in Python </h3>
-<p>To use a module in Python, you need to import it into your script using the <code>import</code> statement. Once a module is imported, you can call its functions or access its classes and variables using the dot notation.</p>
-<p>For example, to import the Python <code>math</code> module, you would write:</p>
-<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-import">import</span> math
-</code></pre><p>Now you can use functions within the <code>math</code> module:</p>
-<pre data-role="codeBlock" data-info="python" class="language-python python"><code>result <span class="token operator">=</span> math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span>  <span class="token comment"># Computes the square root of 25</span>
-<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
-</code></pre><p>Paste these lines into the Python console in QGIS to see the output and press <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true" alt="start"></p>
-<h3 id="using-python-with-qgis-a-nameusing_qgisa">Using Python with QGIS <a name="using_qgis" href=""></a> </h3>
+<h3 id="using-the-qgis-module-in-python">Using the qgis Module in Python </h3>
 <p>QGIS extends Python’s capabilities by providing a specialized module called <code>qgis</code>. This module allows you to interact with the QGIS application, manipulating geographical data and automating tasks.</p>
 <p>To start scripting with Python in QGIS, you'll first need to import the necessary modules provided by QGIS. These typically include:</p>
 <ul>
@@ -406,7 +350,7 @@ area_by_crop <span class="token operator">=</span> <span class="token punctuatio
 
     <span class="token comment"># Update the area_by_crop dictionary for the crop type</span>
     <span class="token comment"># your code</span>
-    
+
 <span class="token comment"># Print the total area for each crop type</span>
 <span class="token keyword keyword-for">for</span> crop<span class="token punctuation">,</span> area <span class="token keyword keyword-in">in</span> area_by_crop<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>crop<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>area<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> acres"</span></span><span class="token punctuation">)</span>
