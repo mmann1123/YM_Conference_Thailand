@@ -5,14 +5,19 @@ Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-sourc
 QGIS brings a Python API (see [PyQGIS Developer Cookbook](https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/) for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.
 
 ## *Table of contents*
-1. [Python Modules](#modules)
-2. [Using Python with QGIS](#using_qgis)
-3. [Tutorial 1: Working with Crop Types in QGIS Python](#tutorial1)
-4. [Tutorial 2: Counting Observations by Crop Type in QGIS](#tutorial2)
+
+1. [The Python Console in QGIS](#console)
+2. [Python Modules](#modules)
+3. [Using Python with QGIS](#using_qgis)
+4. [Tutorial 1: Working with Crop Types in QGIS Python](#tutorial1)
+5. [Tutorial 2: Counting Observations by Crop Type in QGIS](#tutorial2)
+6. [Tutorial 3: Calculating Area of Polygons Using QGIS Python](#tutorial3)
+7. [Challenge Question Answers](#answers)
+
 
 ---
 
-## Accessing the Python Console in QGIS
+## The Python Console in QGIS <a name="console"></a>
 
 To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:
 
@@ -306,6 +311,7 @@ Let’s look at a simple example using a list of fruits to illustrate how we can
 # List of fruits
 fruits = ['apple', 'banana', 'orange', 'apple', 'orange', 'banana', 'orange']
 ```
+
 2) *Initialize the Dictionary*: We start with an empty dictionary `fruit_counts` where each fruit name will be a key, and the count of that fruit will be the corresponding value.
 
 ``` python 
@@ -314,6 +320,7 @@ fruit_counts = {}
 ```
 
 3) *Iterate Through the List*: We loop through each element in the `fruits` list.
+
 4) *Update the Dictionary*: As we move through the elements of `fruits` list, we update the `fruit_counts` dictionary:
    - If the fruit is already a key in the dictionary (`if fruit in fruit_counts`), we increase its count by 1.
    - If the fruit is not yet a new `fruit` key in the dictionary, we add it and set its count to 1.
@@ -326,6 +333,7 @@ for fruit in fruits:
     else:
         fruit_counts[fruit] = 1  # Set the count to 1 if the fruit is not in the dictionary yet
 ```
+
 5) *Print the Results*: After the loop, we print each fruit and its count. The `items()` method returns a list of tuple pairs (key, value) from the dictionary.
 
 ``` python
@@ -368,6 +376,7 @@ for feature in tz_labels_layer.getFeatures():
 for crop, count in crop_counts.items():
     print(f"{crop}: {count}")
 ```
+
 Your output should be as follows:
 
 ``` bash
@@ -399,6 +408,119 @@ This method efficiently tracks the number of occurrences of each crop type, prov
 
 Our `tz_labels.geojson` dataset contains a field named `field_size` that represents the size of each field. Try adapting the code to count the number of observations for each field size category.
 
-### Summary Tutorial 2
+### Summary Tutorial 2 
 
 This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided `tz_labels.geojson`. This process can be adapted to other datasets and attributes for various analytical needs.
+
+---
+---
+
+**PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL**
+
+---
+---
+
+## Tutorial: Calculating Total Area of Polygons in Acres Using QGIS Python <a name="tutorial3"></a>
+
+In this tutorial, we will learn how to load a polygon vector layer into QGIS, access its geometrical data, and calculate the total area of the polygons in acres. We will use the `sa_labels.geojson` dataset and focus on the field named 'crop_name'.
+
+### Step 1: Load the Vector Layer
+
+First, let's load the `sa_labels.geojson` file into your QGIS project. Make sure to open the Python Console within QGIS to run these commands:
+
+```python
+# Path to the sa_labels.geojson file
+layer_path = "/path/to/sa_labels.geojson"  # Change this to the actual file path
+
+# Load the layer into QGIS
+sa_labels_layer = iface.addVectorLayer(layer_path, "SA Labels", "ogr")
+if not sa_labels_layer:
+    print("Failed to load the layer.")
+else:
+    print("Layer loaded successfully.")
+```
+### Step 2: Find the Linear Unit of the Layer
+
+When working with geographic data, understanding the coordinate reference system (CRS) and its linear units is crucial because the measurement of areas, lengths, and other spatial calculations depends on these units. 
+
+In QGIS, each projected layer has a CRS, which defines how the two-dimensional, flat map in QGIS relates to real places on the earth. The CRS includes the type of projection and the units used for the linear measurements, which could be meters, feet, or any other units. 
+
+These units are important as they directly affect how measurements like area and distance are calculated and interpreted.
+
+#### How to Find the Linear Unit of the Projection
+
+To determine the linear unit of the projection for a layer in QGIS, you can inspect the layer’s CRS. Here’s how you can do this using the Python console in QGIS:
+
+```python
+# Assuming 'sa_labels_layer' is the layer you've loaded
+crs = sa_labels_layer.crs()
+
+# Print the CRS description
+print(f"Unit name: {crs.description()}")
+
+# Print the Proj4 string with linear unit
+print(f"Proj4 description: {crs.toProj()}")
+```
+Here the Proj4 string will contain the linear unit of the projection. For example, if the unit is in meters, you will see `+units=m` in the Proj4 string.
+
+### Step 2: Calculating Total Area
+
+Once the layer is loaded, we can calculate the total area of the polygons. Since the area will be calculated in the layer's coordinate reference system units, we need to convert these units to acres. The conversion factor from square meters to acres is approximately 0.000247105.
+
+In order to calculate the total area in acres, we will iterate through each feature in the layer, retrieve its geometry, and sum the areas (measured in $m^2$) of the polygons in a variable called `total_area_sqm`. 
+
+Here's how you can do this in QGIS Python:
+
+```python
+# Initialize a variable to hold the total area in square meters
+total_area_sqm = 0
+
+# Iterate through each feature in the layer
+for feature in sa_labels_layer.getFeatures():
+    # Get the geometry of the feature
+    geom = feature.geometry()
+    
+    # Add the area of the geometry to the total area
+    total_area_sqm += geom.area()
+
+# Convert square meters to acres (1 square meter = 0.000247105 acres)
+total_area_acres = total_area_sqm * 0.000247105
+
+# Print the total area in acres
+print(f"Total area of crops: {total_area_acres:.2f} acres")
+```
+
+---
+### Challenge D: Calculate the total area of each crop type
+
+Extend the code to calculate the total area of each crop type in the `sa_labels.geojson` dataset. You can use a dictionary to store the total area for each crop type.
+
+Let me help you get started, here is a snippet of code that you can use to calculate the total area of each crop type:
+
+```python
+# Initialize a dictionary to hold the total area for each crop type
+area_by_crop = {}
+
+# Iterate through each feature in the layer
+for feature in sa_labels_layer.getFeatures():
+    crop_type = feature['crop_name']  # Adjust the field name if different
+    area_sqm = feature.geometry().area()  # Area in the CRS's units (e.g., square meters)
+
+    
+    # Convert the area to acres
+    
+    # Update the area_by_crop dictionary for the crop type
+
+# Print the total area for each crop type
+for crop, area in area_by_crop.items():
+    print(f"{crop}: {area:.2f} acres")
+```
+
+### Summary Tutorial 3
+
+This tutorial provides you with a basic understanding of how to work with polygon geometries in QGIS using Python, specifically focusing on calculating areas and converting these areas into different units. Such skills are valuable for a wide range of GIS and environmental analysis tasks.
+
+
+## Challenge Question Answers <a name="answers"></a>
+
+> The answers to the challenge questions can be found in the [Challenge Solutions](https://mmann1123.github.io/YM_Conference_Thailand/challenge_solutions.html) page.
