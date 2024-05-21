@@ -29,13 +29,16 @@
 <p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
 <h2 id="table-of-contents"><em>Table of contents</em> </h2>
 <ol>
+<li><a href="#console">The Python Console in QGIS</a></li>
 <li><a href="#modules">Python Modules</a></li>
 <li><a href="#using_qgis">Using Python with QGIS</a></li>
 <li><a href="#tutorial1">Tutorial 1: Working with Crop Types in QGIS Python</a></li>
 <li><a href="#tutorial2">Tutorial 2: Counting Observations by Crop Type in QGIS</a></li>
+<li><a href="#tutorial3">Tutorial 3: Calculating Area of Polygons Using QGIS Python</a></li>
+<li><a href="#answers">Challenge Question Answers</a></li>
 </ol>
 <hr>
-<h2 id="accessing-the-python-console-in-qgis">Accessing the Python Console in QGIS </h2>
+<h2 id="the-python-console-in-qgis-a-nameconsolea">The Python Console in QGIS <a name="console" href=""></a> </h2>
 <p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
 <ol>
 <li><strong>Open QGIS</strong>: Start by launching the QGIS application on your computer.</li>
@@ -257,8 +260,11 @@ fruits <span class="token operator">=</span> <span class="token punctuation">[</
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Initialize a dictionary to hold the count of each fruit</span>
 fruit_counts <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 </code></pre><ol start="3">
-<li><em>Iterate Through the List</em>: We loop through each element in the <code>fruits</code> list.</li>
-<li><em>Update the Dictionary</em>: As we move through the elements of <code>fruits</code> list, we update the <code>fruit_counts</code> dictionary:
+<li>
+<p><em>Iterate Through the List</em>: We loop through each element in the <code>fruits</code> list.</p>
+</li>
+<li>
+<p><em>Update the Dictionary</em>: As we move through the elements of <code>fruits</code> list, we update the <code>fruit_counts</code> dictionary:</p>
 <ul>
 <li>If the fruit is already a key in the dictionary (<code>if fruit in fruit_counts</code>), we increase its count by 1.</li>
 <li>If the fruit is not yet a new <code>fruit</code> key in the dictionary, we add it and set its count to 1.</li>
@@ -328,6 +334,87 @@ water: <span class="token number">5</span>
 <p>Our <code>tz_labels.geojson</code> dataset contains a field named <code>field_size</code> that represents the size of each field. Try adapting the code to count the number of observations for each field size category.</p>
 <h3 id="summary-tutorial-2">Summary Tutorial 2 </h3>
 <p>This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided <code>tz_labels.geojson</code>. This process can be adapted to other datasets and attributes for various analytical needs.</p>
+<hr>
+<hr>
+<p><img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"><br>
+<strong>PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL</strong><br>
+<img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"></p>
+<hr>
+<hr>
+<h2 id="tutorial-3-calculating-total-area-of-polygons-in-acres-using-qgis-python-a-nametutorial3a">Tutorial 3: Calculating Total Area of Polygons in Acres Using QGIS Python <a name="tutorial3" href=""></a> </h2>
+<p>In this tutorial, we will learn how to load a polygon vector layer into QGIS, access its geometrical data, and calculate the total area of the polygons in acres. We will use the <code>sa_labels.geojson</code> dataset and focus on the field named 'crop_name'.</p>
+<h3 id="step-1-load-the-vector-layer-1">Step 1: Load the Vector Layer </h3>
+<p>First, let's load the <code>sa_labels.geojson</code> file into your QGIS project. Make sure to open the Python Console within QGIS to run these commands:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Path to the sa_labels.geojson file</span>
+layer_path <span class="token operator">=</span> <span class="token string">"/path/to/sa_labels.geojson"</span>  <span class="token comment"># Change this to the actual file path</span>
+
+<span class="token comment"># Load the layer into QGIS</span>
+sa_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>layer_path<span class="token punctuation">,</span> <span class="token string">"SA Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> sa_labels_layer<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Failed to load the layer."</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer loaded successfully."</span><span class="token punctuation">)</span>
+</code></pre><h3 id="step-2-find-the-linear-unit-of-the-layer">Step 2: Find the Linear Unit of the Layer </h3>
+<p>When working with geographic data, understanding the coordinate reference system (CRS) and its linear units is crucial because the measurement of areas, lengths, and other spatial calculations depends on these units.</p>
+<p>In QGIS, each projected layer has a CRS, which defines how the two-dimensional, flat map in QGIS relates to real places on the earth. The CRS includes the type of projection and the units used for the linear measurements, which could be meters, feet, or any other units.</p>
+<p>These units are important as they directly affect how measurements like area and distance are calculated and interpreted.</p>
+<h4 id="how-to-find-the-linear-unit-of-the-projection">How to Find the Linear Unit of the Projection </h4>
+<p>To determine the linear unit of the projection for a layer in QGIS, you can inspect the layer’s CRS. Here’s how you can do this using the Python console in QGIS:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Assuming 'sa_labels_layer' is the layer you've loaded</span>
+crs <span class="token operator">=</span> sa_labels_layer<span class="token punctuation">.</span>crs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Print the CRS description</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Unit name: </span><span class="token interpolation"><span class="token punctuation">{</span>crs<span class="token punctuation">.</span>description<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Print the Proj4 string with linear unit</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Proj4 description: </span><span class="token interpolation"><span class="token punctuation">{</span>crs<span class="token punctuation">.</span>toProj<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+</code></pre><p>Here the Proj4 string will contain the linear unit of the projection. For example, if the unit is in meters, you will see <code>+units=m</code> in the Proj4 string.</p>
+<h3 id="step-2-calculating-total-area">Step 2: Calculating Total Area </h3>
+<p>Once the layer is loaded, we can calculate the total area of the polygons. Since the area will be calculated in the layer's coordinate reference system units, we need to convert these units to acres. The conversion factor from square meters to acres is approximately 0.000247105.</p>
+<p>In order to calculate the total area in acres, we will iterate through each feature in the layer, retrieve its geometry, and sum the areas (measured in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>m</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">m^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">m</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>) of the polygons in a variable called <code>total_area_sqm</code>.</p>
+<p>Here's how you can do this in QGIS Python:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Initialize a variable to hold the total area in square meters</span>
+total_area_sqm <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token comment"># Iterate through each feature in the layer</span>
+<span class="token keyword keyword-for">for</span> feature <span class="token keyword keyword-in">in</span> sa_labels_layer<span class="token punctuation">.</span>getFeatures<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Get the geometry of the feature</span>
+    geom <span class="token operator">=</span> feature<span class="token punctuation">.</span>geometry<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># Add the area of the geometry to the total area</span>
+    total_area_sqm <span class="token operator">+=</span> geom<span class="token punctuation">.</span>area<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Convert square meters to acres (1 square meter = 0.000247105 acres)</span>
+total_area_acres <span class="token operator">=</span> total_area_sqm <span class="token operator">*</span> <span class="token number">0.000247105</span>
+
+<span class="token comment"># Print the total area in acres</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Total area of crops: </span><span class="token interpolation"><span class="token punctuation">{</span>total_area_acres<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> acres"</span></span><span class="token punctuation">)</span>
+</code></pre><hr>
+<h3 id="challenge-d-calculate-the-total-area-of-each-crop-type">Challenge D: Calculate the total area of each crop type </h3>
+<p>Extend the code to calculate the total area of each crop type in the <code>sa_labels.geojson</code> dataset. You can use a dictionary to store the total area for each crop type.</p>
+<p>Let me help you get started, here is a snippet of code that you can use to calculate the total area of each crop type:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Initialize a dictionary to hold the total area for each crop type</span>
+area_by_crop <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token comment"># Iterate through each feature in the layer</span>
+<span class="token keyword keyword-for">for</span> feature <span class="token keyword keyword-in">in</span> sa_labels_layer<span class="token punctuation">.</span>getFeatures<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    crop_type <span class="token operator">=</span> feature<span class="token punctuation">[</span><span class="token string">'crop_name'</span><span class="token punctuation">]</span>  <span class="token comment"># Adjust the field name if different</span>
+    area_sqm <span class="token operator">=</span> feature<span class="token punctuation">.</span>geometry<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>area<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Area in the CRS's units (e.g., square meters)</span>
+
+    
+    <span class="token comment"># Convert the area to acres</span>
+    
+    <span class="token comment"># Update the area_by_crop dictionary for the crop type</span>
+
+<span class="token comment"># Print the total area for each crop type</span>
+<span class="token keyword keyword-for">for</span> crop<span class="token punctuation">,</span> area <span class="token keyword keyword-in">in</span> area_by_crop<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>crop<span class="token punctuation">}</span></span><span class="token string">: </span><span class="token interpolation"><span class="token punctuation">{</span>area<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> acres"</span></span><span class="token punctuation">)</span>
+</code></pre><h3 id="summary-tutorial-3">Summary Tutorial 3 </h3>
+<p>This tutorial provides you with a basic understanding of how to work with polygon geometries in QGIS using Python, specifically focusing on calculating areas and converting these areas into different units. Such skills are valuable for a wide range of GIS and environmental analysis tasks.</p>
+<h2 id="challenge-question-answers-a-nameanswersa">Challenge Question Answers <a name="answers" href=""></a> </h2>
+<blockquote>
+<p>The answers to the challenge questions can be found in the <a href="https://mmann1123.github.io/YM_Conference_Thailand/challenge_solutions.html">Challenge Solutions</a> page.</p>
+</blockquote>
 
       </div>
       

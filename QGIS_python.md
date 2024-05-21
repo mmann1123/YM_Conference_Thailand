@@ -412,15 +412,18 @@ Our `tz_labels.geojson` dataset contains a field named `field_size` that represe
 
 This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided `tz_labels.geojson`. This process can be adapted to other datasets and attributes for various analytical needs.
 
----
----
+ 
 
+---
+---
+![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  
 **PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL**
+![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true) 
 
 ---
 ---
 
-## Tutorial: Calculating Total Area of Polygons in Acres Using QGIS Python <a name="tutorial3"></a>
+## Tutorial 3: Calculating Total Area of Polygons in Acres Using QGIS Python <a name="tutorial3"></a>
 
 In this tutorial, we will learn how to load a polygon vector layer into QGIS, access its geometrical data, and calculate the total area of the polygons in acres. We will use the `sa_labels.geojson` dataset and focus on the field named 'crop_name'.
 
@@ -439,6 +442,7 @@ if not sa_labels_layer:
 else:
     print("Layer loaded successfully.")
 ```
+
 ### Step 2: Find the Linear Unit of the Layer
 
 When working with geographic data, understanding the coordinate reference system (CRS) and its linear units is crucial because the measurement of areas, lengths, and other spatial calculations depends on these units. 
@@ -467,7 +471,7 @@ Here the Proj4 string will contain the linear unit of the projection. For exampl
 
 Once the layer is loaded, we can calculate the total area of the polygons. Since the area will be calculated in the layer's coordinate reference system units, we need to convert these units to acres. The conversion factor from square meters to acres is approximately 0.000247105.
 
-In order to calculate the total area in acres, we will iterate through each feature in the layer, retrieve its geometry, and sum the areas (measured in $m^2$) of the polygons in a variable called `total_area_sqm`. 
+In order to calculate the total area in acres, we will iterate through each feature in the layer, retrieve its geometry, and sum the areas (measured in $m^2$) of the polygons in a variable called `total_area_sqm`.
 
 Here's how you can do this in QGIS Python:
 
@@ -491,6 +495,7 @@ print(f"Total area of crops: {total_area_acres:.2f} acres")
 ```
 
 ---
+
 ### Challenge D: Calculate the total area of each crop type
 
 Extend the code to calculate the total area of each crop type in the `sa_labels.geojson` dataset. You can use a dictionary to store the total area for each crop type.
