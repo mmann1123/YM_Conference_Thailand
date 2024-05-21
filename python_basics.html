@@ -33,56 +33,46 @@
 <li><a href="#loops">Mastering For Loops</a></li>
 <li><a href="#modules">Introduction to Python Modules</a></li>
 </ol>
-<h2 id="the-python-console-in-qgis-a-nameconsolea">The Python Console in QGIS <a name="console" href=""></a> </h2>
-<p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
+<p>Here’s a revised version to avoid plagiarism:<br>
+Here’s a revised version to avoid plagiarism:</p>
+<h2 id="1-accessing-the-python-console-in-qgis-a-nameconsolea">1) Accessing the Python Console in QGIS <a name="console" href=""></a> </h2>
+<p>To begin using Python within QGIS, follow these steps to access the Python console:</p>
 <ol>
-<li><strong>Open QGIS</strong>: Start by launching the QGIS application on your computer.</li>
-<li><strong>Open the Python Console</strong>: Look for a button on the toolbar that resembles a Python logo or go to the menu bar and select <code>Plugins</code> -&gt; <code>Python Console</code>. This will open a small scripting window at the bottom or side of your QGIS workspace.</li>
+<li><strong>Launch QGIS</strong>: Open the QGIS application on your computer.</li>
+<li><strong>Open the Python Console</strong>: Click the toolbar button that looks like a Python logo or navigate to <code>Plugins</code> -&gt; <code>Python Console</code> in the menu bar. This action opens a small scripting window at the bottom or side of your QGIS workspace.</li>
 </ol>
-<p>The Python console in QGIS is split into two main parts:</p>
+<p>The QGIS Python console consists of two primary components:</p>
 <ul>
-<li>
-<p><strong>The command line</strong>: This is where you can type single lines of Python code and execute them immediately.</p>
-</li>
-<li>
-<p><strong>The editor</strong>: Here, you can write more complex scripts, save them, and run them as needed.</p>
-</li>
+<li><strong>Command Line</strong>: Here, you can enter and execute single lines of Python code.</li>
+<li><strong>Editor</strong>: This area allows you to write, save, and run more complex scripts.</li>
 </ul>
-<p>This dual setup allows you to quickly test small pieces of code and develop more extensive scripts for automating tasks.</p>
-<h2 id="qgis-python-console">QGIS Python Console </h2>
-<p>The console is a Python interpreter that allows you to execute Python commands. Modules from QGIS (analysis, core, gui, server, processing, 3d) and Qt (QtCore, QtGui, QtNetwork, QtWidgets, QtXml) as well as Python's math, os, re, and sys modules are already imported and can be used directly.</p>
-<p>The interactive console is composed of a toolbar, an input area, and an output area.<br>
+<p>This setup is useful for both quickly testing small code snippets and developing larger scripts for task automation.</p>
+<h2 id="understanding-the-qgis-python-console">Understanding the QGIS Python Console </h2>
+<p>The QGIS Python console is an interactive interpreter where you can run Python commands. It includes modules from QGIS (such as analysis, core, gui, server, processing, and 3d) and Qt (including QtCore, QtGui, QtNetwork, QtWidgets, and QtXml), along with Python's own math, os, re, and sys modules, which are all pre-imported for immediate use.</p>
+<p>The console interface includes a toolbar, an input area, and an output area.<br>
 <img src="https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console.png?raw=true" alt="The Python Console"></p>
-<h2 id="qgis-editor">QGIS Editor </h2>
-<p>The editor is a Python script editor that allows you to write and execute Python scripts. It is composed of a toolbar, an input area, an output area, and a dockable code editor.</p>
+<h2 id="using-the-qgis-editor">Using the QGIS Editor </h2>
+<p>The editor within QGIS is a script editor for Python that lets you write and execute Python scripts. It features a toolbar, input and output areas, and a dockable code editor.</p>
 <p><img src="https://github.com/qgis/QGIS-Documentation/blob/master/docs/user_manual/plugins/img/python_console_editor.png?raw=true" alt="The Python Editor"></p>
-<p>This editor is a full-featured Python editor that provides syntax highlighting, code completion, and error checking. It also allows you to save and load scripts, as well as run them directly from the editor.</p>
-<h3 id="toolbar">Toolbar </h3>
-<p>The toolbar proposes the following tools:</p>
+<p>This editor offers full Python editing capabilities, including syntax highlighting, code completion, and error checking. You can save and load scripts and execute them directly from the editor.</p>
+<h3 id="toolbar-features">Toolbar Features </h3>
+<p>The toolbar in the Python console provides several useful tools:</p>
 <ul>
-<li>
-<p>Clear Console <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"> to wipe the output area;</p>
-</li>
-<li>
-<p>Run Command <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true" alt="start"> available in the input area: same as pressing Enter;</p>
-</li>
-<li>
-<p>Show Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconShowEditorConsole.png?raw=true" alt="showEditorConsole">: toggles console editor visibility;</p>
-</li>
-<li>
-<p>Options... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionOptions.png?raw=true" alt="options">: opens a dialog to configure console properties;</p>
-</li>
-<li>
-<p>Help... <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionHelpContents.png?raw=true" alt="helpContents"> provides a menu to access various documentation:</p>
+<li><strong>Clear Console</strong> <img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/clear.png?raw=true" alt="clearConsole">: Clears the output area.</li>
+<li><strong>Run Command</strong> <img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/play.png?raw=true" alt="start">: Executes the command in the input area, equivalent to pressing Enter.</li>
+<li><strong>Show Editor</strong> <img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/editorbutton.png?raw=true" alt="showEditorConsole">: Toggles the visibility of the console editor.</li>
+<li><strong>Options...</strong> <img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/options.png?raw=true" alt="options">: Opens a dialog to configure console properties.</li>
+<li><strong>Help...</strong> <img src="https://github.com/mmann1123/YM_Conference_Thailand/blob/main/images/questionmark.png?raw=true" alt="helpContents">: Provides access to various documentation:
 <ul>
+<li><a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Cookbook</a></li>
 <li><a href="https://docs.qgis.org/latest/en/docs/user_manual/plugins/python_console.html">Python Console Help</a></li>
 <li><a href="https://qgis.org/api/">PyQGIS API documentation</a></li>
-<li><a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Cookbook</a></li>
 </ul>
 </li>
 </ul>
-<p>Dock Code Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true" alt="dock"> to dock or undock the panel in QGIS interface.</p>
-<h2 id="python-tutorial-understanding-variables-a-namevariablesa">Python Tutorial: Understanding Variables <a name="variables" href=""></a> </h2>
+<p>This should help you get started with the Python console and editor in QGIS, making your workflow more efficient and automated.</p>
+<hr>
+<h2 id="2-python-tutorial-understanding-variables-a-namevariablesa">2) Python Tutorial: Understanding Variables <a name="variables" href=""></a> </h2>
 <p>Welcome to this tutorial on Python variables. In this guide, we'll cover the basics of how variables work in Python, the execution flow of code, and the concept of variable overwriting. By the end of this tutorial, you'll have a solid understanding of how to define and manipulate variables in Python.</p>
 <h3 id="what-is-a-variable">What is a Variable? </h3>
 <p>In Python, a variable is a named location used to store data in the memory. A variable is created the moment you first assign a value to it, and it gets destroyed when the program ends.</p>
@@ -128,7 +118,7 @@ number <span class="token operator">=</span> number <span class="token operator"
 <h3 id="variables-conclusion">Variables Conclusion </h3>
 <p>Understanding how variables work in Python is fundamental to becoming proficient in the language. By mastering variable assignment and the concept of overwriting, you can manipulate data effectively within your programs. Remember, variables are essential for storing information that your program can manipulate, so knowing how to use them efficiently is crucial for any Python programmer.</p>
 <hr>
-<h2 id="mastering-for-loops-a-nameloopsa">Mastering For Loops <a name="loops" href=""></a> </h2>
+<h2 id="3-mastering-for-loops-a-nameloopsa">3) Mastering For Loops <a name="loops" href=""></a> </h2>
 <p>In this guide, you'll learn how to use <code>for</code> loops effectively, including understanding their structure, the importance of indentation, and how Python executes these loops line by line, allowing for variable modification within the loop.</p>
 <h3 id="introduction-to-for-loops">Introduction to For Loops </h3>
 <p>A <code>for</code> loop in Python is used to iterate over a sequence, which could be a list, a tuple, a dictionary, a set, or even a string. This type of loop allows you to execute a block of code multiple times, which is especially useful for tasks that require repetitive actions.</p>
@@ -191,7 +181,8 @@ Final sum: 15
 <h3 id="conclusion">Conclusion </h3>
 <p><code>For</code> loops are a fundamental aspect of Python that allows you to iterate over sequences efficiently. Understanding how to structure these loops, the significance of proper indentation, and the implications of line-by-line execution helps in creating robust and dynamic Python scripts.</p>
 <p>By mastering <code>for</code> loops, you enhance your capability to handle repetitive tasks in programming, making your code more efficient and your programming tasks easier to manage.</p>
-<h2 id="introduction-to-python-modules-a-namemodulesa">Introduction to Python Modules <a name="modules" href=""></a> </h2>
+<hr>
+<h2 id="4-introduction-to-python-modules-a-namemodulesa">4) Introduction to Python Modules <a name="modules" href=""></a> </h2>
 <p>In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts.</p>
 <p>Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.</p>
 <h3 id="importing-modules-in-python">Importing Modules in Python </h3>
