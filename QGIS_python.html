@@ -27,6 +27,10 @@
 <h1 id="introduction-to-python-in-qgis">Introduction to Python in QGIS </h1>
 <p>Welcome to our tutorial on using Python with QGIS! QGIS is a powerful open-source geographic information system (GIS) that supports various GIS operations and spatial data management. One of the fantastic features of QGIS is its built-in Python console, which allows you to enhance your GIS projects with programming.</p>
 <p>QGIS brings a Python API (see <a href="https://docs.qgis.org/latest/en/docs/pyqgis_developer_cookbook/">PyQGIS Developer Cookbook</a> for some code samples) to let the user interact with its objects (layers, features, or interface). QGIS also has a Python console.</p>
+<h1 id="table-of-contents">Table of contents </h1>
+<ol>
+<li><a href="#modules">Python Modules</a></li>
+</ol>
 <h2 id="accessing-the-python-console-in-qgis">Accessing the Python Console in QGIS </h2>
 <p>To get started with Python in QGIS, you first need to access the Python console. Here’s how you can do it:</p>
 <ol>
@@ -68,12 +72,12 @@
 </li>
 </ul>
 <p>Dock Code Editor <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/dock.png?raw=true" alt="dock"> to dock or undock the panel in QGIS interface.</p>
-<h4 id="why-use-python-in-qgis">Why Use Python in QGIS? </h4>
+<h2 id="why-use-python-in-qgis">Why Use Python in QGIS? </h2>
 <p>Using Python in QGIS allows you to automate repetitive tasks, manipulate spatial data in ways that are cumbersome or impossible with the GUI alone, and extend the functionality of QGIS through custom scripts and plugins.</p>
 <p>Throughout this tutorial, we will explore simple Python commands and scripts that you can execute in the Python console to interact with QGIS and perform basic GIS operations. These activities are designed to be fun and engaging, providing you with a hands-on introduction to programming within a GIS environment.</p>
 <p>Let’s get started with some basic commands to familiarize you with the Python console in QGIS!</p>
 <hr>
-<h2 id="introduction-to-python-modules">Introduction to Python Modules </h2>
+<h2 id="introduction-to-python-modules-a-namemodulesa">Introduction to Python Modules <a name="modules" href=""></a> </h2>
 <p>In Python, a module is a file containing Python code that defines functions, classes, or variables, which can be accessed and utilized in other Python scripts.</p>
 <p>Python has a vast standard library of modules that you can use for various tasks, from mathematical operations to handling internet data. Additionally, third-party modules can be installed and used in your projects, greatly extending Python's capabilities.</p>
 <h3 id="importing-modules-in-python">Importing Modules in Python </h3>
@@ -219,7 +223,7 @@ error <span class="token operator">=</span> QgsVectorFileWriter<span class="toke
 <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Error: Failed to write Shapefile."</span><span class="token punctuation">)</span>
 
-</code></pre><h3 id="conclusion">Conclusion </h3>
+</code></pre><h3 id="summary-tutorial-1">Summary Tutorial 1 </h3>
 <p>In this tutorial, we learned how to use Python in QGIS to read a GeoJSON file, subset the data for rice crops, and write the results to a new file. We also explored how to write the output to a Shapefile by consulting the QGIS API documentation.</p>
 <hr>
 <hr>
@@ -318,7 +322,7 @@ water: <span class="token number">5</span>
 <hr>
 <h4 id="challenge-c-count-observations-by-field-size">Challenge C: Count observations by field size </h4>
 <p>Our <code>tz_labels.geojson</code> dataset contains a field named <code>field_size</code> that represents the size of each field. Try adapting the code to count the number of observations for each field size category.</p>
-<h3 id="conclusion-1">Conclusion </h3>
+<h3 id="summary-tutorial-2">Summary Tutorial 2 </h3>
 <p>This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided <code>tz_labels.geojson</code>. This process can be adapted to other datasets and attributes for various analytical needs.</p>
 
       </div>
