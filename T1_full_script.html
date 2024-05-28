@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>index</title>
+      <title>T1_full_script</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -24,92 +24,45 @@
     
       <div class="crossnote markdown-preview  ">
       
-<h1 id="python-and-qgis-basics">Python and Qgis Basics </h1>
-<h2 id="python-basics">Python Basics </h2>
-<p>This section covers fundamental Python programming concepts, essential for new learners and a great refresher for experienced programmers. Topics include:</p>
-<ol>
-<li>
-<p><strong>The Python Console in QGIS</strong>:</p>
-<ul>
-<li>Access and utilize the QGIS Python console and editor.</li>
-<li>Execute simple commands and develop more complex scripts.</li>
-</ul>
-</li>
-<li>
-<p><strong>Understanding Variables</strong>:</p>
-<ul>
-<li>Learn about variable creation, usage, and overwriting.</li>
-<li>Interactive exercises to solidify your understanding of variable management.</li>
-</ul>
-</li>
-<li>
-<p><strong>Mastering For Loops</strong>:</p>
-<ul>
-<li>Iterate over sequences efficiently using for loops.</li>
-<li>Understand loop structure, the importance of indentation, and dynamic variable modification.</li>
-</ul>
-</li>
-<li>
-<p><strong>Introduction to Python Modules</strong>:</p>
-<ul>
-<li>Explore the use of Python modules to extend functionality.</li>
-<li>Learn to import and utilize standard and third-party modules in your projects.</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="introduction-to-python-in-qgis">Introduction to Python in QGIS </h2>
-<p>Welcome to our comprehensive guide on leveraging Python in QGIS! QGIS is a robust open-source geographic information system (GIS) that excels in spatial data management and GIS operations. With its built-in Python console and extensive API, QGIS allows for powerful scripting and automation to enhance your GIS projects.</p>
-<h3 id="why-use-python-in-qgis">Why Use Python in QGIS? </h3>
-<p>Python in QGIS enables automation of repetitive tasks, advanced data manipulation, and the creation of custom scripts and plugins. This tutorial introduces basic Python commands and scripts, providing a hands-on introduction to programming within the QGIS environment.</p>
-<h3 id="tutorials-overview">Tutorials Overview </h3>
-<ol>
-<li>
-<p><strong>Working with Crop Types in QGIS Python</strong>:</p>
-<ul>
-<li>Load and manipulate GeoJSON files.</li>
-<li>Subset data based on crop types and save the results to new files.</li>
-</ul>
-</li>
-<li>
-<p><strong>Counting Observations by Crop Type in QGIS</strong>:</p>
-<ul>
-<li>Load vector layers and access attribute data.</li>
-<li>Use Python dictionaries to count and analyze the number of observations for each crop type.</li>
-</ul>
-</li>
-<li>
-<p><strong>Calculating Total Area of Polygons Using QGIS Python</strong>:</p>
-<ul>
-<li>Load polygon vector layers and calculate their total area in acres.</li>
-<li>Convert area measurements from square meters to acres and handle different crop types.</li>
-</ul>
-</li>
-</ol>
-<p>Each tutorial includes step-by-step instructions, example code, and challenge exercises to reinforce your learning and enhance your practical skills in Python scripting within QGIS.</p>
-<p>The following is a website that contains two sections: Python and Qgis Basics.</p>
-<hr>
-<h4 id="download-data-for-the-tutorials">Download data for the tutorials: </h4>
-<ul>
-<li>
-<p>Download sa_labels here: <a href="https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/sa_labels.geojson">data/sa_labels.geojson</a></p>
-</li>
-<li>
-<p>Download tz_labels here: <a href="https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/tz_labels.geojson">data/tz_labels.geojson</a></p>
-</li>
-</ul>
-<hr>
-<h4 id="start-learning-here">Start learning here: </h4>
-<ul>
-<li>
-<p><a href="https://mmann1123.github.io/YM_Conference_Thailand/python_basics.html">Python Basics</a></p>
-</li>
-<li>
-<p><a href="https://mmann1123.github.io/YM_Conference_Thailand/QGIS_python.html">Introduction to Python in QGIS</a></p>
-</li>
-</ul>
-<hr>
+<h4 id="full-script">Full Script </h4>
+<p>The following is the full script that you can run in the QGIS Python console to read a GeoJSON file, subset the data for rice crops, and write the results to a new file.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-from">from</span> qgis<span class="token punctuation">.</span>core <span class="token keyword keyword-import">import</span> <span class="token operator">*</span>
+<span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
 
+<span class="token comment"># Path to the GeoJSON file</span>
+file_path <span class="token operator">=</span> <span class="token string">r'path_to_your_file/tz_labels.geojson'</span>
+
+<span class="token comment"># Load the layer in</span>
+all_crops <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>file_path<span class="token punctuation">,</span>   <span class="token comment"># path to the file</span>
+                                 baseName<span class="token operator">=</span> <span class="token string">"Rice Crops"</span><span class="token punctuation">,</span>  <span class="token comment"># name of the layer in QGIS</span>
+                                 providerKey<span class="token operator">=</span><span class="token string">"ogr"</span><span class="token punctuation">)</span> <span class="token comment"># how to read it</span>
+<span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> all_crops<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer failed to load!"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer loaded successfully!"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Select features where the crop type is 'Rice'</span>
+all_crops<span class="token punctuation">.</span>selectByExpression<span class="token punctuation">(</span><span class="token string">"\"primary_crop\" = 'maize'"</span><span class="token punctuation">)</span>
+<span class="token comment"># Print the number of selected rows</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Number of selected rows: </span><span class="token interpolation"><span class="token punctuation">{</span>all_crops<span class="token punctuation">.</span>selectedFeatureCount<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Define the output file path</span>
+output_path <span class="token operator">=</span> <span class="token string">r'path_to_output/rice_subset.geojson'</span>
+
+<span class="token comment"># Write the selected features to a new GeoJSON</span>
+error <span class="token operator">=</span> QgsVectorFileWriter<span class="token punctuation">.</span>writeAsVectorFormat<span class="token punctuation">(</span>layer <span class="token operator">=</span> all_crops<span class="token punctuation">,</span> 
+                    fileName <span class="token operator">=</span> output_path<span class="token punctuation">,</span> <span class="token comment"># path and name of the output file</span>
+                    fileEncoding <span class="token operator">=</span> <span class="token string">"UTF-8"</span><span class="token punctuation">,</span> <span class="token comment"># encoding of the output file</span>
+                    destCRS <span class="token operator">=</span> all_crops<span class="token punctuation">.</span>crs<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  <span class="token comment"># projection of the output file</span>
+                    driverName <span class="token operator">=</span><span class="token string">"GeoJSON"</span><span class="token punctuation">,</span> <span class="token comment"># output file format</span>
+                    onlySelected<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment"># write only selected features</span>
+
+<span class="token keyword keyword-if">if</span> error<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> QgsVectorFileWriter<span class="token punctuation">.</span>NoError<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Success: GeoJSON file has been created."</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Error: Failed to write GeoJSON."</span><span class="token punctuation">)</span>
+</code></pre>
       </div>
       
       

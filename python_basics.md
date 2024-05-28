@@ -9,9 +9,6 @@ In this tutorial, you'll learn the basics of Python programming, including varia
 3. [Mastering For Loops](#loops)
 4. [Introduction to Python Modules](#modules)
 
-Here’s a revised version to avoid plagiarism:
-Here’s a revised version to avoid plagiarism:
-
 ## 1) Accessing the Python Console in QGIS <a name="console"></a>
 
 To begin using Python within QGIS, follow these steps to access the Python console:

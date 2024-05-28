@@ -55,13 +55,14 @@ from qgis.core import *
 import qgis.utils
 
 # Path to the GeoJSON file
-file_path = 'path_to_your_file/tz_labels.geojson'
+# NOTE: Please make sure 'r' is in front of the path 
+file_path = r'path_to_your_file/tz_labels.geojson'
 
 # Load the layer in 
-rice_layer = iface.addVectorLayer(file_path,   # path to the file
-                                 baseName= "Rice Crops",  # name of the layer in QGIS
+all_crops = iface.addVectorLayer(file_path,   # path to the file
+                                 baseName= "All Crops",  # name of the layer in QGIS
                                  providerKey="ogr") # how to read it
-if not rice_layer:
+if not all_crops:
     print("Layer failed to load!")
 else:
     print("Layer loaded successfully!")
@@ -73,7 +74,7 @@ You should now see `Rice Crops` in your QGIS Layers Panel. This layer contains t
 
 ![Crop ](images/rice_crops.png)
 
-From this point on we will be refering this layer by the name `rice_layer` in our code.
+From this point on we will be refering this layer by the name `all_crops` in our code.
 
 <br>
 
@@ -92,9 +93,9 @@ Next, we'll filter out the rice crops from our dataset. We'll assume that the cr
 
 ```python
 # Select features where the crop type is 'Rice'
-rice_layer.selectByExpression("\"primary_crop\" = 'maize'")
+all_crops.selectByExpression("\"primary_crop\" = 'maize'")
 # Print the number of selected rows
-print(f"Number of selected rows: {rice_layer.selectedFeatureCount()}")
+print(f"Number of selected rows: {all_crops.selectedFeatureCount()}")
 ```
 
 Paste these lines into the Python console in QGIS to see the output and press ![start](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/mActionStart.png?raw=true)
@@ -109,13 +110,13 @@ After subsetting the data, let's write the selected features to a new GeoJSON fi
 
 ```python
 # Define the output file path
-output_path = 'path_to_output/rice_subset.geojson'
+output_path = r'path_to_output/rice_subset.geojson'
 
 # Write the selected features to a new GeoJSON
-error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
+error = QgsVectorFileWriter.writeAsVectorFormat(layer = all_crops, 
                     fileName = output_path, # path and name of the output file
                     fileEncoding = "UTF-8", # encoding of the output file
-                    destCRS = rice_layer.crs(),  # projection of the output file
+                    destCRS = all_crops.crs(),  # projection of the output file
                     driverName ="GeoJSON", # output file format
                     onlySelected=True) # write only selected features
 
@@ -127,48 +128,11 @@ else:
 
 Your `output_path` should be a new file in the same directory as the original file. You can now load this new file into QGIS to see the subset of rice crops.
 
----
-#### Full Script
-The following is the full script that you can run in the QGIS Python console to read a GeoJSON file, subset the data for rice crops, and write the results to a new file.
+ 
+### Tutorial 1: Full Script
 
-```python
-from qgis.core import *
-import qgis.utils
+Please follow the following link to the [full script](https://mmann1123.github.io/YM_Conference_Thailand/T1_full_script.html) for this tutorial.
 
-# Path to the GeoJSON file
-file_path = 'path_to_your_file/tz_labels.geojson'
-
-# Load the layer in
-rice_layer = iface.addVectorLayer(file_path,   # path to the file
-                                 baseName= "Rice Crops",  # name of the layer in QGIS
-                                 providerKey="ogr") # how to read it
-if not rice_layer:
-    print("Layer failed to load!")
-else:
-    print("Layer loaded successfully!")
-
-# Select features where the crop type is 'Rice'
-rice_layer.selectByExpression("\"primary_crop\" = 'maize'")
-# Print the number of selected rows
-print(f"Number of selected rows: {rice_layer.selectedFeatureCount()}")
-
-
-# Define the output file path
-output_path = 'path_to_output/rice_subset.geojson'
-
-# Write the selected features to a new GeoJSON
-error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
-                    fileName = output_path, # path and name of the output file
-                    fileEncoding = "UTF-8", # encoding of the output file
-                    destCRS = rice_layer.crs(),  # projection of the output file
-                    driverName ="GeoJSON", # output file format
-                    onlySelected=True) # write only selected features
-
-if error[0] == QgsVectorFileWriter.NoError:
-    print("Success: GeoJSON file has been created.")
-else:
-    print("Error: Failed to write GeoJSON.")
-```
 
 ---
 #### Challenge A: Import your file
@@ -186,12 +150,12 @@ Here’s a hint on how you might adjust the code for writing a Shapefile:
 
 ```python
 # Define the output file path for the Shapefile
-output_path_shp = 'path_to_output/rice_subset.shp'
+output_path_shp = r'path_to_output/rice_subset.shp'
 
-error = QgsVectorFileWriter.writeAsVectorFormat(layer = rice_layer, 
+error = QgsVectorFileWriter.writeAsVectorFormat(layer = all_crops, 
                     fileName = output_path_shp, # path and name of the output file
                     fileEncoding = "UTF-8", # encoding of the output file
-                    destCRS = rice_layer.crs(),  # projection of the output file
+                    destCRS = all_crops.crs(),  # projection of the output file
                     driverName = __________________, # output file format
                     onlySelected=True) # write only selected features
 
@@ -219,7 +183,7 @@ First, let’s load the `tz_labels.geojson` into QGIS. Open the Python console i
 
 ```python
 # Load the tz_labels.geojson file
-layer_path = "/path/to/tz_labels.geojson"  # Update this path to your file's location
+layer_path = r"/path/to/tz_labels.geojson"  # Update this path to your file's location
 tz_labels_layer = iface.addVectorLayer(layer_path, "TZ Labels", "ogr")
 if not tz_labels_layer:
     print("Failed to load the layer.")
@@ -332,6 +296,14 @@ water: 5
 
 This method efficiently tracks the number of occurrences of each crop type, providing a quick summary of the data in your GIS layer. By leveraging Python dictionaries, you can easily extend this approach to count various attributes across different datasets in QGIS.
 
+
+
+### Tutorial 2: Full Script
+
+Please follow the following link to the [full script](https://mmann1123.github.io/YM_Conference_Thailand/T2_full_script.html) for this tutorial.
+
+
+
 ---
 
 #### Challenge C: Count observations by field size
@@ -363,7 +335,7 @@ First, let's load the `sa_labels.geojson` file into your QGIS project. Make sure
 
 ```python
 # Path to the sa_labels.geojson file
-layer_path = "/path/to/sa_labels.geojson"  # Change this to the actual file path
+layer_path = r"/path/to/sa_labels.geojson"  # Change this to the actual file path
 
 # Load the layer into QGIS
 sa_labels_layer = iface.addVectorLayer(layer_path, "SA Labels", "ogr")
@@ -395,6 +367,7 @@ print(f"Unit name: {crs.description()}")
 # Print the Proj4 string with linear unit
 print(f"Proj4 description: {crs.toProj()}")
 ```
+
 Here the Proj4 string will contain the linear unit of the projection. For example, if the unit is in meters, you will see `+units=m` in the Proj4 string.
 
 ### Step 3: Calculating Total Area
@@ -423,6 +396,11 @@ total_area_acres = total_area_sqm * 0.000247105
 # Print the total area in acres
 print(f"Total area of crops: {total_area_acres:.2f} acres")
 ```
+
+
+### Tutorial 3: Full Script
+
+Please follow the following link to the [full script](https://mmann1123.github.io/YM_Conference_Thailand/T3_full_script.html) for this tutorial.
 
 ---
 

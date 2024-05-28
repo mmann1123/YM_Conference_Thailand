@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>index</title>
+      <title>T3_full_script</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -24,92 +24,49 @@
     
       <div class="crossnote markdown-preview  ">
       
-<h1 id="python-and-qgis-basics">Python and Qgis Basics </h1>
-<h2 id="python-basics">Python Basics </h2>
-<p>This section covers fundamental Python programming concepts, essential for new learners and a great refresher for experienced programmers. Topics include:</p>
-<ol>
-<li>
-<p><strong>The Python Console in QGIS</strong>:</p>
-<ul>
-<li>Access and utilize the QGIS Python console and editor.</li>
-<li>Execute simple commands and develop more complex scripts.</li>
-</ul>
-</li>
-<li>
-<p><strong>Understanding Variables</strong>:</p>
-<ul>
-<li>Learn about variable creation, usage, and overwriting.</li>
-<li>Interactive exercises to solidify your understanding of variable management.</li>
-</ul>
-</li>
-<li>
-<p><strong>Mastering For Loops</strong>:</p>
-<ul>
-<li>Iterate over sequences efficiently using for loops.</li>
-<li>Understand loop structure, the importance of indentation, and dynamic variable modification.</li>
-</ul>
-</li>
-<li>
-<p><strong>Introduction to Python Modules</strong>:</p>
-<ul>
-<li>Explore the use of Python modules to extend functionality.</li>
-<li>Learn to import and utilize standard and third-party modules in your projects.</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="introduction-to-python-in-qgis">Introduction to Python in QGIS </h2>
-<p>Welcome to our comprehensive guide on leveraging Python in QGIS! QGIS is a robust open-source geographic information system (GIS) that excels in spatial data management and GIS operations. With its built-in Python console and extensive API, QGIS allows for powerful scripting and automation to enhance your GIS projects.</p>
-<h3 id="why-use-python-in-qgis">Why Use Python in QGIS? </h3>
-<p>Python in QGIS enables automation of repetitive tasks, advanced data manipulation, and the creation of custom scripts and plugins. This tutorial introduces basic Python commands and scripts, providing a hands-on introduction to programming within the QGIS environment.</p>
-<h3 id="tutorials-overview">Tutorials Overview </h3>
-<ol>
-<li>
-<p><strong>Working with Crop Types in QGIS Python</strong>:</p>
-<ul>
-<li>Load and manipulate GeoJSON files.</li>
-<li>Subset data based on crop types and save the results to new files.</li>
-</ul>
-</li>
-<li>
-<p><strong>Counting Observations by Crop Type in QGIS</strong>:</p>
-<ul>
-<li>Load vector layers and access attribute data.</li>
-<li>Use Python dictionaries to count and analyze the number of observations for each crop type.</li>
-</ul>
-</li>
-<li>
-<p><strong>Calculating Total Area of Polygons Using QGIS Python</strong>:</p>
-<ul>
-<li>Load polygon vector layers and calculate their total area in acres.</li>
-<li>Convert area measurements from square meters to acres and handle different crop types.</li>
-</ul>
-</li>
-</ol>
-<p>Each tutorial includes step-by-step instructions, example code, and challenge exercises to reinforce your learning and enhance your practical skills in Python scripting within QGIS.</p>
-<p>The following is a website that contains two sections: Python and Qgis Basics.</p>
-<hr>
-<h4 id="download-data-for-the-tutorials">Download data for the tutorials: </h4>
-<ul>
-<li>
-<p>Download sa_labels here: <a href="https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/sa_labels.geojson">data/sa_labels.geojson</a></p>
-</li>
-<li>
-<p>Download tz_labels here: <a href="https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/tz_labels.geojson">data/tz_labels.geojson</a></p>
-</li>
-</ul>
-<hr>
-<h4 id="start-learning-here">Start learning here: </h4>
-<ul>
-<li>
-<p><a href="https://mmann1123.github.io/YM_Conference_Thailand/python_basics.html">Python Basics</a></p>
-</li>
-<li>
-<p><a href="https://mmann1123.github.io/YM_Conference_Thailand/QGIS_python.html">Introduction to Python in QGIS</a></p>
-</li>
-</ul>
-<hr>
+<h4 id="tuturial-3-full-script">Tuturial 3: Full Script </h4>
+<p>The following is the full script that you can run in the QGIS Python console to read a GeoJSON file, calculate the total area of polygons in acres, and print the results.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-from">from</span> qgis<span class="token punctuation">.</span>core <span class="token keyword keyword-import">import</span> <span class="token operator">*</span>
+<span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
 
+ <span class="token comment"># Path to the sa_labels.geojson file</span>
+layer_path <span class="token operator">=</span> <span class="token string">r"/path/to/sa_labels.geojson"</span>  <span class="token comment"># Change this to the actual file path</span>
+
+<span class="token comment"># Load the layer into QGIS</span>
+sa_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>layer_path<span class="token punctuation">,</span> <span class="token string">"SA Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> sa_labels_layer<span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Failed to load the layer."</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Layer loaded successfully."</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Assuming 'sa_labels_layer' is the layer you've loaded</span>
+crs <span class="token operator">=</span> sa_labels_layer<span class="token punctuation">.</span>crs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Print the CRS description</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Unit name: </span><span class="token interpolation"><span class="token punctuation">{</span>crs<span class="token punctuation">.</span>description<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Print the Proj4 string with linear unit</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Proj4 description: </span><span class="token interpolation"><span class="token punctuation">{</span>crs<span class="token punctuation">.</span>toProj<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Initialize a variable to hold the total area in square meters</span>
+total_area_sqm <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token comment"># Iterate through each feature in the layer</span>
+<span class="token keyword keyword-for">for</span> feature <span class="token keyword keyword-in">in</span> sa_labels_layer<span class="token punctuation">.</span>getFeatures<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Get the geometry of the feature</span>
+    geom <span class="token operator">=</span> feature<span class="token punctuation">.</span>geometry<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># Add the area of the geometry to the total area</span>
+    total_area_sqm <span class="token operator">+=</span> geom<span class="token punctuation">.</span>area<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Convert square meters to acres (1 square meter = 0.000247105 acres)</span>
+total_area_acres <span class="token operator">=</span> total_area_sqm <span class="token operator">*</span> <span class="token number">0.000247105</span>
+
+<span class="token comment"># Print the total area in acres</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Total area of crops: </span><span class="token interpolation"><span class="token punctuation">{</span>total_area_acres<span class="token punctuation">:</span><span class="token format-spec">.2f</span><span class="token punctuation">}</span></span><span class="token string"> acres"</span></span><span class="token punctuation">)</span>
+</code></pre>
       </div>
       
       

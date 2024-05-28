@@ -50,12 +50,20 @@ Each tutorial includes step-by-step instructions, example code, and challenge ex
 
 The following is a website that contains two sections: Python and Qgis Basics. 
 
+--- 
+#### Download data for the tutorials:
+
+- Download sa_labels here: [data/sa_labels.geojson](https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/sa_labels.geojson)
+
+- Download tz_labels here: [data/tz_labels.geojson](https://github.com/mmann1123/YM_Conference_Thailand/blob/c900e67a0df2d8a254330e66a8bf4bc6e637d741/data/tz_labels.geojson)
+
 ---
 
-Start learning here:
+#### Start learning here:
 
 - [Python Basics](https://mmann1123.github.io/YM_Conference_Thailand/python_basics.html)
 
 - [Introduction to Python in QGIS](https://mmann1123.github.io/YM_Conference_Thailand/QGIS_python.html)
 
 ---
+
