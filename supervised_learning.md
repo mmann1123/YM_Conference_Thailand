@@ -1,24 +1,22 @@
-
-# Machine Learning - Examples
+ # Machine Learning - Supervised Examples
 
 ## Country Cuisine Classifier
-In this example, we will create a dataset with regional variations in food and climate. The dataset will have the following columns:
+As in the last example we will use the following variables:
 - Country
 - Region
 - Staple Food
 - Preferred Cuisine
 - Climate
 
-The dataset will have the following regional variations:
-- North, South, Central
- 
-Copy and paste the following in the QGIS python console to create the dataset called `data`:
+However this time we will use supervised classfication methods to classify the data.
+
+Copy and paste the following in the QGIS Python console to create the dataset called `data`:
 
 ``` python
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans,MeanShift
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
@@ -103,6 +101,7 @@ print(data)
 ```
 
 Example data:
+
 |--|Country|Region|Staple Food|Preferred Cuisine|Climate|
 |--|-------|------|-----------|-----------------|-------|
 |0|Japan|North Japan|Rice|Sushi|Temperate|
@@ -118,6 +117,7 @@ def visualize_classifier(
     data,
     classifier="DecisionTreeClassifier",
     cmap="rainbow",
+    y="Country",
     x="Staple Food",
     x2="Climate",
 ):
@@ -125,12 +125,15 @@ def visualize_classifier(
 
     # create a dictionary to map the classifier to the model
     classifier_dict = {
-        "KMeans": KMeans(4),
-        "RandomForestClassifier": RandomForestClassifier(),
+        "KMeans": KMeans(4, random_state=0),
+        "MeanShift": MeanShift(),
+        "RandomForestClassifier": RandomForestClassifier(
+            random_state=0, n_estimators=100
+        ),
         "DecisionTreeClassifier": DecisionTreeClassifier(random_state=0),
         "GaussianNB": GaussianNB(),
         "LogisticRegression": LogisticRegression(
-            multi_class="multinomial", solver="lbfgs", max_iter=200
+            multi_class="multinomial", solver="lbfgs", max_iter=200, random_state=0
         ),
     }
 
@@ -153,7 +156,7 @@ def visualize_classifier(
 
     X = le_x.fit_transform(data[x])
     X2 = le_x2.fit_transform(data[x2])
-    y = le_y.fit_transform(data["Country"])
+    y = le_y.fit_transform(data[y])
 
     # Combine features
     X = np.c_[X, X2]
@@ -201,47 +204,24 @@ def visualize_classifier(
     ax.set_ylabel(x2)
 
     # print accuracy
-    print(f"Accuracy: {model.score(X, y)}")
+    try:
+        print(f"Accuracy: {model.score(X, y)}")
+    except:
+        pass
 
     ax.set(xlim=xlim, ylim=ylim)
     plt.show()
-
 ```
 
 We will use the `Staple Food` and `Climate` columns as features and the `Country` column as the target variable. We will use a decision tree classifier to fit the model and plot the results.
 
-There are 5 classifiers available:
-- 'KMeans'
+There are 4 supervised classifiers available:
 - 'RandomForestClassifier'
 - 'GaussianNB'
 - 'LogisticRegression'
+- 'DecisionTreeClassifier'
 
-First, we will use `'KMeans'` as the classifier - this is an unsupervised learning algorithm that will cluster the data into 4 clusters based only on `'Staple Food'` and `'Climate'`.
-
-``` python
-# Visualize the classifier
-visualize_classifier(
-    data, 
-    classifier="KMeans", 
-    x="Staple Food", 
-    x2="Climate"
-)
-```
-
-The function will plot the data points and the decision boundaries of the classifier. The accuracy of the model will be printed in the console.
-
-Now we can try other variables, let's try using `Preferred Cuisine` and `Climate` as features:
-
-``` python
-visualize_classifier(
-    data, 
-    classifier="KMeans", 
-    x="Preferred Cuisine", 
-    x2="Climate"
-)
-```
-
-That still isn't a great model, let's try using a different classifier, the `RandomForestClassifier`:
+Try using different supervised classifiers to see how they perform with the given data.
 
 ``` python
 visualize_classifier(
@@ -251,3 +231,84 @@ visualize_classifier(
     x2="Climate"
 )
 ```
+
+> Try using different classifiers and features to see how they perform with the given data.
+
+
+## Wine Data Classifier
+
+In this section, we will use the wine dataset from scikit-learn to find the ideal classifier and best two features for classification. The wine dataset is a classic dataset for classification and contains chemical analysis of wines grown in the same region in Italy.
+
+First, we need to load the wine dataset:
+
+```python
+from sklearn.datasets import load_wine
+import pandas as pd
+
+# Load Wine dataset
+wine = load_wine()
+wine_data = pd.DataFrame(wine.data, columns=wine.feature_names)
+wine_data['target'] = wine.target
+print(wine_data.head())
+```
+
+The dataset contains 13 features:
+
+- alcohol
+- malic_acid
+- ash
+- alcalinity_of_ash
+- magnesium
+- total_phenols
+- flavanoids
+- nonflavanoid_phenols
+- proanthocyanins
+- color_intensity
+- hue
+- od280/od315_of_diluted_wines
+- proline
+ 
+Now let's use the `alcohol` and `malic_acid` columns as features and the `y` column as the target variable. We will use different classifiers to see which one performs best.
+
+First, let's try using the `DecisionTreeClassifier`:
+
+```python
+# Visualize the classifier with DecisionTreeClassifier
+visualize_classifier(
+    wine_data,
+    classifier="DecisionTreeClassifier",
+    y="target",
+    x="alcohol",
+    x2="malic_acid",
+)
+```
+
+Next, let's try using the `LogisticRegression` :
+
+```python
+# Visualize the classifier with LogisticRegression
+visualize_classifier(
+    wine_data,
+    classifier="LogisticRegression",
+    y="target",
+    x="alcohol",
+    x2="malic_acid"
+)
+```
+and so on...
+
+You can try other combinations of features and classifiers to find the best model and features for the wine dataset. For example, you can use `color_intensity` and `hue` as features and the `GaussianNB` classifier:
+
+```python
+# Visualize the classifier with GaussianNB and different features
+visualize_classifier(
+    wine_data,
+    classifier="GaussianNB",
+    y="target",
+    x="color_intensity",
+    x2="hue"
+)
+```
+
+This tutorial allows students to explore different classifiers and feature combinations to find the best model for classifying the wine dataset.
+

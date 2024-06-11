@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>machine_learning</title>
+      <title>supervised_learning</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -24,9 +24,9 @@
     
       <div class="crossnote markdown-preview  ">
       
-<h1 id="machine-learning---examples">Machine Learning - Examples </h1>
+<h1>Machine Learning - Supervised Examples</h1>
 <h2 id="country-cuisine-classifier">Country Cuisine Classifier </h2>
-<p>In this example, we will create a dataset with regional variations in food and climate. The dataset will have the following columns:</p>
+<p>As in the last example we will use the following variables:</p>
 <ul>
 <li>Country</li>
 <li>Region</li>
@@ -34,15 +34,12 @@
 <li>Preferred Cuisine</li>
 <li>Climate</li>
 </ul>
-<p>The dataset will have the following regional variations:</p>
-<ul>
-<li>North, South, Central</li>
-</ul>
-<p>Copy and paste the following in the QGIS python console to create the dataset called <code>data</code>:</p>
+<p>However this time we will use supervised classfication methods to classify the data.</p>
+<p>Copy and paste the following in the QGIS Python console to create the dataset called <code>data</code>:</p>
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-import">import</span> numpy <span class="token keyword keyword-as">as</span> np
 <span class="token keyword keyword-import">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword keyword-as">as</span> plt
 <span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>tree <span class="token keyword keyword-import">import</span> DecisionTreeClassifier
-<span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>cluster <span class="token keyword keyword-import">import</span> KMeans
+<span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>cluster <span class="token keyword keyword-import">import</span> KMeans<span class="token punctuation">,</span>MeanShift
 <span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword keyword-import">import</span> RandomForestClassifier
 <span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>naive_bayes <span class="token keyword keyword-import">import</span> GaussianNB
 <span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>linear_model <span class="token keyword keyword-import">import</span> LogisticRegression
@@ -176,6 +173,7 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
     data<span class="token punctuation">,</span>
     classifier<span class="token operator">=</span><span class="token string">"DecisionTreeClassifier"</span><span class="token punctuation">,</span>
     cmap<span class="token operator">=</span><span class="token string">"rainbow"</span><span class="token punctuation">,</span>
+    y<span class="token operator">=</span><span class="token string">"Country"</span><span class="token punctuation">,</span>
     x<span class="token operator">=</span><span class="token string">"Staple Food"</span><span class="token punctuation">,</span>
     x2<span class="token operator">=</span><span class="token string">"Climate"</span><span class="token punctuation">,</span>
 <span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -183,12 +181,15 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
 
     <span class="token comment"># create a dictionary to map the classifier to the model</span>
     classifier_dict <span class="token operator">=</span> <span class="token punctuation">{</span>
-        <span class="token string">"KMeans"</span><span class="token punctuation">:</span> KMeans<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token string">"RandomForestClassifier"</span><span class="token punctuation">:</span> RandomForestClassifier<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">"KMeans"</span><span class="token punctuation">:</span> KMeans<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">"MeanShift"</span><span class="token punctuation">:</span> MeanShift<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">"RandomForestClassifier"</span><span class="token punctuation">:</span> RandomForestClassifier<span class="token punctuation">(</span>
+            random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> n_estimators<span class="token operator">=</span><span class="token number">100</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"DecisionTreeClassifier"</span><span class="token punctuation">:</span> DecisionTreeClassifier<span class="token punctuation">(</span>random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"GaussianNB"</span><span class="token punctuation">:</span> GaussianNB<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"LogisticRegression"</span><span class="token punctuation">:</span> LogisticRegression<span class="token punctuation">(</span>
-            multi_class<span class="token operator">=</span><span class="token string">"multinomial"</span><span class="token punctuation">,</span> solver<span class="token operator">=</span><span class="token string">"lbfgs"</span><span class="token punctuation">,</span> max_iter<span class="token operator">=</span><span class="token number">200</span>
+            multi_class<span class="token operator">=</span><span class="token string">"multinomial"</span><span class="token punctuation">,</span> solver<span class="token operator">=</span><span class="token string">"lbfgs"</span><span class="token punctuation">,</span> max_iter<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">0</span>
         <span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span>
 
@@ -211,7 +212,7 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
 
     X <span class="token operator">=</span> le_x<span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>data<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
     X2 <span class="token operator">=</span> le_x2<span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>data<span class="token punctuation">[</span>x2<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    y <span class="token operator">=</span> le_y<span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token string">"Country"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    y <span class="token operator">=</span> le_y<span class="token punctuation">.</span>fit_transform<span class="token punctuation">(</span>data<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">)</span>
 
     <span class="token comment"># Combine features</span>
     X <span class="token operator">=</span> np<span class="token punctuation">.</span>c_<span class="token punctuation">[</span>X<span class="token punctuation">,</span> X2<span class="token punctuation">]</span>
@@ -259,43 +260,89 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
     ax<span class="token punctuation">.</span>set_ylabel<span class="token punctuation">(</span>x2<span class="token punctuation">)</span>
 
     <span class="token comment"># print accuracy</span>
-    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Accuracy: </span><span class="token interpolation"><span class="token punctuation">{</span>model<span class="token punctuation">.</span>score<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-try">try</span><span class="token punctuation">:</span>
+        <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Accuracy: </span><span class="token interpolation"><span class="token punctuation">{</span>model<span class="token punctuation">.</span>score<span class="token punctuation">(</span>X<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-except">except</span><span class="token punctuation">:</span>
+        <span class="token keyword keyword-pass">pass</span>
 
     ax<span class="token punctuation">.</span><span class="token builtin">set</span><span class="token punctuation">(</span>xlim<span class="token operator">=</span>xlim<span class="token punctuation">,</span> ylim<span class="token operator">=</span>ylim<span class="token punctuation">)</span>
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
 </code></pre><p>We will use the <code>Staple Food</code> and <code>Climate</code> columns as features and the <code>Country</code> column as the target variable. We will use a decision tree classifier to fit the model and plot the results.</p>
-<p>There are 5 classifiers available:</p>
+<p>There are 4 supervised classifiers available:</p>
 <ul>
-<li>'KMeans'</li>
 <li>'RandomForestClassifier'</li>
 <li>'GaussianNB'</li>
 <li>'LogisticRegression'</li>
+<li>'DecisionTreeClassifier'</li>
 </ul>
-<p>First, we will use <code>'KMeans'</code> as the classifier - this is an unsupervised learning algorithm that will cluster the data into 4 clusters based only on <code>'Staple Food'</code> and <code>'Climate'</code>.</p>
-<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Visualize the classifier</span>
-visualize_classifier<span class="token punctuation">(</span>
-    data<span class="token punctuation">,</span> 
-    classifier<span class="token operator">=</span><span class="token string">"KMeans"</span><span class="token punctuation">,</span> 
-    x<span class="token operator">=</span><span class="token string">"Staple Food"</span><span class="token punctuation">,</span> 
-    x2<span class="token operator">=</span><span class="token string">"Climate"</span>
-<span class="token punctuation">)</span>
-</code></pre><p>The function will plot the data points and the decision boundaries of the classifier. The accuracy of the model will be printed in the console.</p>
-<p>Now we can try other variables, let's try using <code>Preferred Cuisine</code> and <code>Climate</code> as features:</p>
-<pre data-role="codeBlock" data-info="python" class="language-python python"><code>visualize_classifier<span class="token punctuation">(</span>
-    data<span class="token punctuation">,</span> 
-    classifier<span class="token operator">=</span><span class="token string">"KMeans"</span><span class="token punctuation">,</span> 
-    x<span class="token operator">=</span><span class="token string">"Preferred Cuisine"</span><span class="token punctuation">,</span> 
-    x2<span class="token operator">=</span><span class="token string">"Climate"</span>
-<span class="token punctuation">)</span>
-</code></pre><p>That still isn't a great model, let's try using a different classifier, the <code>RandomForestClassifier</code>:</p>
+<p>Try using different supervised classifiers to see how they perform with the given data.</p>
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code>visualize_classifier<span class="token punctuation">(</span>
     data<span class="token punctuation">,</span> 
     classifier<span class="token operator">=</span><span class="token string">"RandomForestClassifier"</span><span class="token punctuation">,</span> 
     x<span class="token operator">=</span><span class="token string">"Preferred Cuisine"</span><span class="token punctuation">,</span> 
     x2<span class="token operator">=</span><span class="token string">"Climate"</span>
 <span class="token punctuation">)</span>
-</code></pre>
+</code></pre><blockquote>
+<p>Try using different classifiers and features to see how they perform with the given data.</p>
+</blockquote>
+<h2 id="wine-data-classifier">Wine Data Classifier </h2>
+<p>In this section, we will use the wine dataset from scikit-learn to find the ideal classifier and best two features for classification. The wine dataset is a classic dataset for classification and contains chemical analysis of wines grown in the same region in Italy.</p>
+<p>First, we need to load the wine dataset:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-from">from</span> sklearn<span class="token punctuation">.</span>datasets <span class="token keyword keyword-import">import</span> load_wine
+<span class="token keyword keyword-import">import</span> pandas <span class="token keyword keyword-as">as</span> pd
+
+<span class="token comment"># Load Wine dataset</span>
+wine <span class="token operator">=</span> load_wine<span class="token punctuation">(</span><span class="token punctuation">)</span>
+wine_data <span class="token operator">=</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>wine<span class="token punctuation">.</span>data<span class="token punctuation">,</span> columns<span class="token operator">=</span>wine<span class="token punctuation">.</span>feature_names<span class="token punctuation">)</span>
+wine_data<span class="token punctuation">[</span><span class="token string">'target'</span><span class="token punctuation">]</span> <span class="token operator">=</span> wine<span class="token punctuation">.</span>target
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span>wine_data<span class="token punctuation">.</span>head<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><p>The dataset contains 13 features:</p>
+<ul>
+<li>alcohol</li>
+<li>malic_acid</li>
+<li>ash</li>
+<li>alcalinity_of_ash</li>
+<li>magnesium</li>
+<li>total_phenols</li>
+<li>flavanoids</li>
+<li>nonflavanoid_phenols</li>
+<li>proanthocyanins</li>
+<li>color_intensity</li>
+<li>hue</li>
+<li>od280/od315_of_diluted_wines</li>
+<li>proline</li>
+</ul>
+<p>Now let's use the <code>alcohol</code> and <code>malic_acid</code> columns as features and the <code>y</code> column as the target variable. We will use different classifiers to see which one performs best.</p>
+<p>First, let's try using the <code>DecisionTreeClassifier</code>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Visualize the classifier with DecisionTreeClassifier</span>
+visualize_classifier<span class="token punctuation">(</span>
+    wine_data<span class="token punctuation">,</span>
+    classifier<span class="token operator">=</span><span class="token string">"DecisionTreeClassifier"</span><span class="token punctuation">,</span>
+    y<span class="token operator">=</span><span class="token string">"target"</span><span class="token punctuation">,</span>
+    x<span class="token operator">=</span><span class="token string">"alcohol"</span><span class="token punctuation">,</span>
+    x2<span class="token operator">=</span><span class="token string">"malic_acid"</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+</code></pre><p>Next, let's try using the <code>LogisticRegression</code> :</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Visualize the classifier with LogisticRegression</span>
+visualize_classifier<span class="token punctuation">(</span>
+    wine_data<span class="token punctuation">,</span>
+    classifier<span class="token operator">=</span><span class="token string">"LogisticRegression"</span><span class="token punctuation">,</span>
+    y<span class="token operator">=</span><span class="token string">"target"</span><span class="token punctuation">,</span>
+    x<span class="token operator">=</span><span class="token string">"alcohol"</span><span class="token punctuation">,</span>
+    x2<span class="token operator">=</span><span class="token string">"malic_acid"</span>
+<span class="token punctuation">)</span>
+</code></pre><p>and so on...</p>
+<p>You can try other combinations of features and classifiers to find the best model and features for the wine dataset. For example, you can use <code>color_intensity</code> and <code>hue</code> as features and the <code>GaussianNB</code> classifier:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Visualize the classifier with GaussianNB and different features</span>
+visualize_classifier<span class="token punctuation">(</span>
+    wine_data<span class="token punctuation">,</span>
+    classifier<span class="token operator">=</span><span class="token string">"GaussianNB"</span><span class="token punctuation">,</span>
+    y<span class="token operator">=</span><span class="token string">"target"</span><span class="token punctuation">,</span>
+    x<span class="token operator">=</span><span class="token string">"color_intensity"</span><span class="token punctuation">,</span>
+    x2<span class="token operator">=</span><span class="token string">"hue"</span>
+<span class="token punctuation">)</span>
+</code></pre><p>This tutorial allows students to explore different classifiers and feature combinations to find the best model for classifying the wine dataset.</p>
+
       </div>
       
       
