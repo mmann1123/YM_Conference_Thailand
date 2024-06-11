@@ -127,6 +127,7 @@ def visualize_classifier(
     classifier_dict = {
         "KMeans": KMeans(4),
         "RandomForestClassifier": RandomForestClassifier(),
+        "DecisionTreeClassifier": DecisionTreeClassifier(random_state=0),
         "GaussianNB": GaussianNB(),
         "LogisticRegression": LogisticRegression(
             multi_class="multinomial", solver="lbfgs", max_iter=200
@@ -215,14 +216,38 @@ There are 5 classifiers available:
 - 'GaussianNB'
 - 'LogisticRegression'
 
+First, we will use `'KMeans'` as the classifier - this is an unsupervised learning algorithm that will cluster the data into 4 clusters based only on `'Staple Food'` and `'Climate'`.
+
 ``` python
 # Visualize the classifier
 visualize_classifier(
     data, 
-    classifier="LogisticRegression", 
+    classifier="KMeans", 
     x="Staple Food", 
     x2="Climate"
 )
 ```
 
 The function will plot the data points and the decision boundaries of the classifier. The accuracy of the model will be printed in the console.
+
+Now we can try other variables, let's try using `Preferred Cuisine` and `Climate` as features:
+
+``` python
+visualize_classifier(
+    data, 
+    classifier="KMeans", 
+    x="Preferred Cuisine", 
+    x2="Climate"
+)
+```
+
+That still isn't a great model, let's try using a different classifier, the `RandomForestClassifier`:
+
+``` python
+visualize_classifier(
+    data, 
+    classifier="RandomForestClassifier", 
+    x="Preferred Cuisine", 
+    x2="Climate"
+)
+```

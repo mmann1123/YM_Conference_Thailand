@@ -185,6 +185,7 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
     classifier_dict <span class="token operator">=</span> <span class="token punctuation">{</span>
         <span class="token string">"KMeans"</span><span class="token punctuation">:</span> KMeans<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"RandomForestClassifier"</span><span class="token punctuation">:</span> RandomForestClassifier<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">"DecisionTreeClassifier"</span><span class="token punctuation">:</span> DecisionTreeClassifier<span class="token punctuation">(</span>random_state<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"GaussianNB"</span><span class="token punctuation">:</span> GaussianNB<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token string">"LogisticRegression"</span><span class="token punctuation">:</span> LogisticRegression<span class="token punctuation">(</span>
             multi_class<span class="token operator">=</span><span class="token string">"multinomial"</span><span class="token punctuation">,</span> solver<span class="token operator">=</span><span class="token string">"lbfgs"</span><span class="token punctuation">,</span> max_iter<span class="token operator">=</span><span class="token number">200</span>
@@ -271,15 +272,30 @@ data <span class="token operator">=</span> pd<span class="token punctuation">.</
 <li>'GaussianNB'</li>
 <li>'LogisticRegression'</li>
 </ul>
+<p>First, we will use <code>'KMeans'</code> as the classifier - this is an unsupervised learning algorithm that will cluster the data into 4 clusters based only on <code>'Staple Food'</code> and <code>'Climate'</code>.</p>
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Visualize the classifier</span>
 visualize_classifier<span class="token punctuation">(</span>
     data<span class="token punctuation">,</span> 
-    classifier<span class="token operator">=</span><span class="token string">"LogisticRegression"</span><span class="token punctuation">,</span> 
+    classifier<span class="token operator">=</span><span class="token string">"KMeans"</span><span class="token punctuation">,</span> 
     x<span class="token operator">=</span><span class="token string">"Staple Food"</span><span class="token punctuation">,</span> 
     x2<span class="token operator">=</span><span class="token string">"Climate"</span>
 <span class="token punctuation">)</span>
 </code></pre><p>The function will plot the data points and the decision boundaries of the classifier. The accuracy of the model will be printed in the console.</p>
-
+<p>Now we can try other variables, let's try using <code>Preferred Cuisine</code> and <code>Climate</code> as features:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>visualize_classifier<span class="token punctuation">(</span>
+    data<span class="token punctuation">,</span> 
+    classifier<span class="token operator">=</span><span class="token string">"KMeans"</span><span class="token punctuation">,</span> 
+    x<span class="token operator">=</span><span class="token string">"Preferred Cuisine"</span><span class="token punctuation">,</span> 
+    x2<span class="token operator">=</span><span class="token string">"Climate"</span>
+<span class="token punctuation">)</span>
+</code></pre><p>That still isn't a great model, let's try using a different classifier, the <code>RandomForestClassifier</code>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>visualize_classifier<span class="token punctuation">(</span>
+    data<span class="token punctuation">,</span> 
+    classifier<span class="token operator">=</span><span class="token string">"RandomForestClassifier"</span><span class="token punctuation">,</span> 
+    x<span class="token operator">=</span><span class="token string">"Preferred Cuisine"</span><span class="token punctuation">,</span> 
+    x2<span class="token operator">=</span><span class="token string">"Climate"</span>
+<span class="token punctuation">)</span>
+</code></pre>
       </div>
       
       
