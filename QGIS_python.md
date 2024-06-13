@@ -183,8 +183,8 @@ First, let’s load the `tz_labels.geojson` into QGIS. Open the Python console i
 
 ```python
 # Load the tz_labels.geojson file
-layer_path = r"/path/to/tz_labels.geojson"  # Update this path to your file's location
-tz_labels_layer = iface.addVectorLayer(layer_path, "TZ Labels", "ogr")
+file_path = r"/path/to/tz_labels.geojson"  # Update this path to your file's location
+tz_labels_layer = iface.addVectorLayer(file_path, "TZ Labels", "ogr")
 if not tz_labels_layer:
     print("Failed to load the layer.")
 else:
@@ -250,7 +250,6 @@ orange: 3
 We can apply the same technique to count crop types from a feature layer in QGIS. Here’s how it connects to our GIS data example:
 
 ```python
-# Suppose we have a layer loaded as tz_labels_layer and it contains a field 'primary_crop'
 
 # Initialize a dictionary to hold the count of each crop type
 crop_counts = {}
@@ -318,8 +317,10 @@ This tutorial demonstrates a simple way to perform attribute data analysis direc
 
 ---
 ---
-![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  
+![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)  ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true)    
 **PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL**
+
+Press the following button to clear the console:
 ![clearConsole](https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true) 
 
 ---

@@ -30,8 +30,8 @@
 <span class="token keyword keyword-import">import</span> qgis<span class="token punctuation">.</span>utils
  
 <span class="token comment"># Load the tz_labels.geojson file</span>
-layer_path <span class="token operator">=</span> <span class="token string">r"/path/to/tz_labels.geojson"</span>  <span class="token comment"># Update this path to your file's location</span>
-tz_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>layer_path<span class="token punctuation">,</span> <span class="token string">"TZ Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
+file_path <span class="token operator">=</span> <span class="token string">r"/path/to/tz_labels.geojson"</span>  <span class="token comment"># Update this path to your file's location</span>
+tz_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>file_path<span class="token punctuation">,</span> <span class="token string">"TZ Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> tz_labels_layer<span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Failed to load the layer."</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>

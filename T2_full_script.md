@@ -7,8 +7,8 @@ from qgis.core import *
 import qgis.utils
  
 # Load the tz_labels.geojson file
-layer_path = r"/path/to/tz_labels.geojson"  # Update this path to your file's location
-tz_labels_layer = iface.addVectorLayer(layer_path, "TZ Labels", "ogr")
+file_path = r"/path/to/tz_labels.geojson"  # Update this path to your file's location
+tz_labels_layer = iface.addVectorLayer(file_path, "TZ Labels", "ogr")
 if not tz_labels_layer:
     print("Failed to load the layer.")
 else:

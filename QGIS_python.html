@@ -147,8 +147,8 @@ error <span class="token operator">=</span> QgsVectorFileWriter<span class="toke
 <h3 id="step-1-load-the-vector-layer">Step 1: Load the Vector Layer </h3>
 <p>First, let’s load the <code>tz_labels.geojson</code> into QGIS. Open the Python console in QGIS and use the following command to add the layer:</p>
 <pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Load the tz_labels.geojson file</span>
-layer_path <span class="token operator">=</span> <span class="token string">r"/path/to/tz_labels.geojson"</span>  <span class="token comment"># Update this path to your file's location</span>
-tz_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>layer_path<span class="token punctuation">,</span> <span class="token string">"TZ Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
+file_path <span class="token operator">=</span> <span class="token string">r"/path/to/tz_labels.geojson"</span>  <span class="token comment"># Update this path to your file's location</span>
+tz_labels_layer <span class="token operator">=</span> iface<span class="token punctuation">.</span>addVectorLayer<span class="token punctuation">(</span>file_path<span class="token punctuation">,</span> <span class="token string">"TZ Labels"</span><span class="token punctuation">,</span> <span class="token string">"ogr"</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-if">if</span> <span class="token keyword keyword-not">not</span> tz_labels_layer<span class="token punctuation">:</span>
     <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">"Failed to load the layer."</span><span class="token punctuation">)</span>
 <span class="token keyword keyword-else">else</span><span class="token punctuation">:</span>
@@ -198,9 +198,7 @@ banana<span class="token punctuation">:</span> <span class="token number">2</spa
 orange<span class="token punctuation">:</span> <span class="token number">3</span>
 </code></pre><h3 id="step-2-applying-this-to-qgis-data">Step 2: Applying This to QGIS Data </h3>
 <p>We can apply the same technique to count crop types from a feature layer in QGIS. Here’s how it connects to our GIS data example:</p>
-<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Suppose we have a layer loaded as tz_labels_layer and it contains a field 'primary_crop'</span>
-
-<span class="token comment"># Initialize a dictionary to hold the count of each crop type</span>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># Initialize a dictionary to hold the count of each crop type</span>
 crop_counts <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
 <span class="token comment"># Access the features (rows) in the layer</span>
@@ -246,8 +244,9 @@ water: <span class="token number">5</span>
 <p>This tutorial demonstrates a simple way to perform attribute data analysis directly within QGIS using Python. By counting the occurrences of different crop types, we can quickly assess the composition of agricultural data in the provided <code>tz_labels.geojson</code>. This process can be adapted to other datasets and attributes for various analytical needs.</p>
 <hr>
 <hr>
-<p><img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"><br>
-<strong>PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL</strong><br>
+<p><img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"><img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole">  <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole">  <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole">  <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole">  <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"><br>
+<strong>PLEASE CLEAR THE CONSOLE BEFORE MOVING ON TO THE NEXT TUTORIAL</strong></p>
+<p>Press the following button to clear the console:<br>
 <img src="https://github.com/qgis/QGIS-Documentation/blob/master//static/common/iconClearConsole.png?raw=true" alt="clearConsole"></p>
 <hr>
 <hr>
